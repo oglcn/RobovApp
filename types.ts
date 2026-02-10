@@ -22,6 +22,7 @@ export interface QuestionData {
 
 export interface Artifact {
     id: number;
+    qrCode: string; // Unique QR code identifier (e.g., "ROBOV_ART_1")
     name: LocalizedString;
     museums?: string[];
     image: string;

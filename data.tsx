@@ -223,6 +223,7 @@ export const bonusQuestionsData = [
 export const artifactDatabase: Artifact[] = [
     {
         id: 1,
+        qrCode: "ROBOV_ART_1",
         name: { tr: "İskender Lahdi", en: "Alexander Sarcophagus" },
         museums: ["İstanbul Arkeoloji Müzesi", "İstanbul"],
         image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Alexander_Sarcophagus_-_side_1.jpg/640px-Alexander_Sarcophagus_-_side_1.jpg",
@@ -252,6 +253,7 @@ export const artifactDatabase: Artifact[] = [
     },
     {
         id: 2,
+        qrCode: "ROBOV_ART_2",
         name: { tr: "Çingene Kızı Mozaiği", en: "The Gypsy Girl Mosaic" },
         museums: ["Gaziantep Zeugma Mozaik Müzesi", "Gaziantep"],
         image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Gaziantep_Zeugma_Mosaics_Museum_Gypsy_Girl_1452.jpg/449px-Gaziantep_Zeugma_Mosaics_Museum_Gypsy_Girl_1452.jpg",
@@ -281,6 +283,7 @@ export const artifactDatabase: Artifact[] = [
     },
     {
         id: 3,
+        qrCode: "ROBOV_ART_3",
         name: { tr: "Celsus Kütüphanesi", en: "Library of Celsus" },
         museums: ["Efes Müzesi", "İzmir"],
         image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Ephasus_Celsus_Library.JPG/640px-Ephasus_Celsus_Library.JPG",
@@ -310,6 +313,7 @@ export const artifactDatabase: Artifact[] = [
     },
     {
         id: 4,
+        qrCode: "ROBOV_ART_4",
         name: { tr: "Hitit Güneşi Kursu", en: "Hittite Sun Course" },
         museums: ["Anadolu Medeniyetleri Müzesi", "Ankara"],
         image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Ankara_Museum_of_Anatolian_Civilizations_9660.jpg/640px-Ankara_Museum_of_Anatolian_Civilizations_9660.jpg",
@@ -339,6 +343,7 @@ export const artifactDatabase: Artifact[] = [
     },
     {
         id: 5,
+        qrCode: "ROBOV_ART_5",
         name: { tr: "Troya Hazineleri", en: "Treasure of Troy" },
         museums: ["Troya Müzesi", "Çanakkale"],
         image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Treasure_of_Priam_AO_1.jpg/640px-Treasure_of_Priam_AO_1.jpg",
@@ -368,6 +373,7 @@ export const artifactDatabase: Artifact[] = [
     },
     {
         id: 6,
+        qrCode: "ROBOV_ART_6",
         name: { tr: "Göbeklitepe", en: "Gobekli Tepe" },
         museums: ["Şanlıurfa Müzesi", "Şanlıurfa"],
         image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Gobekli_Tepe%2C_Urfa.jpg/640px-Gobekli_Tepe%2C_Urfa.jpg",
@@ -400,6 +406,7 @@ export const artifactDatabase: Artifact[] = [
 export const genericArtifacts: Artifact[] = [
     {
         id: 101,
+        qrCode: "ROBOV_BONUS_1",
         name: { tr: "Antik Amfora", en: "Ancient Amphora" },
         image: "https://images.unsplash.com/photo-1544211681-37ff44f2d346?auto=format&fit=crop&q=80&w=600",
         hint: { tr: "Denizlerin dibinden çıktım, zeytinyağı taşıdım.", en: "I came from the bottom of the seas, carried olive oil." },
@@ -428,6 +435,7 @@ export const genericArtifacts: Artifact[] = [
     },
     {
         id: 102,
+        qrCode: "ROBOV_BONUS_2",
         name: { tr: "Antik Sikke", en: "Ancient Coin" },
         image: "https://images.unsplash.com/photo-1620409093863-745a33c1cb51?auto=format&fit=crop&q=80&w=600",
         hint: { tr: "Ticareti başlattım, elden ele dolaştım.", en: "I started trade, circulated from hand to hand." },

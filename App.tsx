@@ -7,6 +7,7 @@ import {
   Volume2, VolumeX, Type, Info, Target, ArrowLeft, Lightbulb
 } from 'lucide-react';
 import { GoogleGenAI, Chat, Modality } from "@google/genai";
+import QrScanner from './QrScanner';
 
 import {
   Difficulty, Language, GameMode, FontSizeLevel,
@@ -329,13 +330,31 @@ export default function App() {
   const startQrScan = () => {
     setGameMode('qr');
     setCurrentScreen('qr-scan');
-    // Simulate scanning process
-    setTimeout(() => {
-      // Simulate finding "Istanbul Arkeoloji Muzesi"
-      setSelectedCity("İstanbul");
-      setSelectedMuseum(language === 'tr' ? "İstanbul Arkeoloji Müzesi" : "Istanbul Archeology Museum");
+  };
+
+  const handleQrScanResult = (decodedText: string) => {
+    // Find artifact by qrCode
+    const allArtifacts = [...artifactDatabase, ...genericArtifacts];
+    const matched = allArtifacts.find(a => a.qrCode === decodedText.trim());
+
+    if (matched) {
+      // For treasure hunt mode: mark as scanned and continue current question
+      if (gameMode === 'treasure' && currentScreen === 'qr-scan') {
+        setIsScanned(true);
+        setCurrentScreen('game');
+        return;
+      }
+
+      // For welcome screen QR scan: set museum and go to level select
+      if (matched.museums && matched.museums.length > 0) {
+        setSelectedCity(matched.museums[1] || matched.museums[0]);
+        setSelectedMuseum(matched.museums[0]);
+      }
       setCurrentScreen('level');
-    }, 3000);
+    } else {
+      // Unrecognized QR — show alert and stay on scanner
+      alert(language === 'tr' ? 'Bu QR kod tanınmadı. Lütfen bir eser QR kodunu tarayın.' : 'This QR code is not recognized. Please scan an artifact QR code.');
+    }
   };
 
   const handleLevelSubmit = () => {
@@ -846,28 +865,11 @@ export default function App() {
 
           {/* SCREEN: QR SCANNING (Simulated) */}
           {currentScreen === 'qr-scan' && (
-            <div className="flex-1 flex flex-col items-center justify-center p-6 animate-fade-in relative bg-black min-h-screen">
-              <button onClick={() => setCurrentScreen('welcome')} className="absolute top-12 left-6 text-white z-50 p-2 bg-black/50 rounded-full"><X size={24} /></button>
-
-              <div className="w-full h-full absolute inset-0 opacity-20 pointer-events-none overflow-hidden">
-                {/* Fake Camera Noise/Grid */}
-                <div className="w-full h-full bg-[radial-gradient(#ffffff33_1px,transparent_1px)] [background-size:16px_16px]"></div>
-              </div>
-
-              <div className="relative w-64 h-64 border-4 border-emerald-500/50 rounded-3xl flex items-center justify-center overflow-hidden shadow-[0_0_50px_rgba(16,185,129,0.2)]">
-                <div className="absolute inset-0 border-2 border-emerald-400 opacity-50 rounded-2xl m-2"></div>
-                {/* Scanning Line Animation */}
-                <div className="absolute w-full h-1 bg-emerald-400 shadow-[0_0_10px_#34d399] animate-[bounce_2s_infinite]"></div>
-                <Camera className="text-emerald-500/20 w-32 h-32" />
-              </div>
-
-              <div className="mt-8 text-center space-y-2 relative z-10">
-                <div className={`inline-flex items-center gap-2 bg-emerald-900/30 px-4 py-2 rounded-full border border-emerald-500/30 text-emerald-400 font-mono animate-pulse ${getTextClass('text-sm')}`}>
-                  <ScanLine size={16} /> {t.scanning}
-                </div>
-                <p className={`text-stone-400 max-w-[200px] mx-auto ${getTextClass('text-xs')}`}>{t.scanInstruction}</p>
-              </div>
-            </div>
+            <QrScanner
+              language={language}
+              onScanSuccess={handleQrScanResult}
+              onClose={() => setCurrentScreen(gameMode === 'treasure' ? 'game' : 'welcome')}
+            />
           )}
 
           {/* SCREEN: SETTINGS */}
@@ -1183,10 +1185,6 @@ export default function App() {
                   <button
                     onClick={() => {
                       setCurrentScreen('qr-scan');
-                      setTimeout(() => {
-                        setIsScanned(true);
-                        setCurrentScreen('game');
-                      }, 3000);
                     }}
                     className="flex flex-col items-center justify-center gap-4 bg-emerald-600 hover:bg-emerald-500 text-white p-8 rounded-3xl shadow-[0_0_30px_rgba(16,185,129,0.4)] transition-all animate-pulse hover:scale-105 border-4 border-emerald-400/50"
                   >
