@@ -246,7 +246,7 @@ export const artifactDatabase: Artifact[] = [
         qrCode: "KOSTEM_101",
         name: { tr: "Zeytin Ağacı Kökü", en: "Olive Tree Root" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "",
+        image: "/photos/101.jpeg",
         hint: { tr: "Müzenin girişindeki büyük zeytin ağacı kökünü bul!", en: "Find the big olive tree root at the museum entrance!" },
         inspectionQuestion: {
             text: { tr: "Bu zeytin ağacı kökü yaklaşık kaç yaşındadır?", en: "Approximately how old is this olive tree root?" },
@@ -277,7 +277,7 @@ export const artifactDatabase: Artifact[] = [
         qrCode: "KOSTEM_108",
         name: { tr: "4 Taşlı Zeytin Sıkacağı", en: "4-Stone Olive Press" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "",
+        image: "/photos/108.jpeg",
         hint: { tr: "4 taşlı zeytin sıkacağını bul!", en: "Find the 4-stone olive press!" },
         inspectionQuestion: {
             text: { tr: "4 Taşlı zeytinyağı işliği ne gücü ile çalışır?", en: "What power does the 4-stone olive oil press operate with?" },
@@ -308,7 +308,7 @@ export const artifactDatabase: Artifact[] = [
         qrCode: "KOSTEM_201",
         name: { tr: "Kazdağlılar Zeytinyağı Fabrikası", en: "Kazdağlılar Olive Oil Factory" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "",
+        image: "/photos/201.jpeg",
         hint: { tr: "Kazdağlılar Zeytinyağı Fabrikası tabelasını bul!", en: "Find the Kazdağlılar Olive Oil Factory sign!" },
         inspectionQuestion: {
             text: { tr: "Önünüzdeki zeytinyağı fabrikası ne gücü ile çalışır?", en: "What power does this olive oil factory operate with?" },
@@ -339,7 +339,7 @@ export const artifactDatabase: Artifact[] = [
         qrCode: "KOSTEM_104",
         name: { tr: "Klazomenai Zeytinyağı Deposu", en: "Klazomenai Olive Oil Storage" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "",
+        image: "/photos/104.jpeg",
         hint: { tr: "Klazomenai Zeytinyağı Deposu'nu bul!", en: "Find the Klazomenai Olive Oil Storage!" },
         inspectionQuestion: {
             text: { tr: "Zeytinyağı saklamak için ne kullanılır?", en: "What is used to store olive oil?" },
@@ -370,7 +370,7 @@ export const artifactDatabase: Artifact[] = [
         qrCode: "KOSTEM_106",
         name: { tr: "Antik Ticaret Gemisi", en: "Ancient Trade Ship" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "",
+        image: "/photos/106.jpeg",
         hint: { tr: "Gemiyi bul!", en: "Find the ship!" },
         inspectionQuestion: {
             text: { tr: "Antik dönemde geminin içinde neler taşınmıştır?", en: "What was transported inside the ship in ancient times?" },
@@ -401,7 +401,7 @@ export const artifactDatabase: Artifact[] = [
         qrCode: "KOSTEM_105",
         name: { tr: "Zeytinyağı ve Sofralık Zeytin Depolama Alanı", en: "Olive Oil and Table Olive Storage Area" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "",
+        image: "/photos/105.jpeg",
         hint: { tr: "Zeytinyağı ve sofralık zeytin depolama alanını bul!", en: "Find the olive oil and table olive storage area!" },
         inspectionQuestion: {
             text: { tr: "Zeytinyağı hangi ülkelerde kutsaldı?", en: "In which countries was olive oil considered sacred?" },
@@ -432,7 +432,7 @@ export const artifactDatabase: Artifact[] = [
         qrCode: "KOSTEM_206",
         name: { tr: "Elektrik Gücü ile Çalışan Yerli Zeytinyağı İşliği", en: "Domestic Electric Olive Oil Press" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "",
+        image: "/photos/206.jpeg",
         hint: { tr: "Elektrikle çalışan yerli zeytinyağı işliğini bul!", en: "Find the domestic electric olive oil press!" },
         inspectionQuestion: {
             text: { tr: "İlk yerli zeytinyağı fabrikası nerede kurulmuştur?", en: "Where was the first domestic olive oil factory established?" },
@@ -463,7 +463,7 @@ export const artifactDatabase: Artifact[] = [
         qrCode: "KOSTEM_205",
         name: { tr: "Zeytin ve Zeytinyağı Kantarları", en: "Olive and Olive Oil Scales" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "",
+        image: "/photos/205.jpeg",
         hint: { tr: "Zeytin ve zeytinyağı kantarlarını bul!", en: "Find the olive and olive oil scales!" },
         inspectionQuestion: {
             text: { tr: "İlk terazi sistemleri nerede kuruldu?", en: "Where were the first scale systems established?" },
@@ -494,7 +494,7 @@ export const artifactDatabase: Artifact[] = [
         qrCode: "KOSTEM_203",
         name: { tr: "Mazot Gücü ile Çalışan Sistem", en: "Diesel-Powered System" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "",
+        image: "/photos/203.jpeg",
         hint: { tr: "Mazot gücü ile çalışan sistemi bul!", en: "Find the diesel-powered system!" },
         inspectionQuestion: {
             text: { tr: "Mazot gücü ile çalışan sistem ilk hangi şehirde kullanıldı?", en: "In which city was the diesel-powered system first used?" },
@@ -525,7 +525,7 @@ export const artifactDatabase: Artifact[] = [
         qrCode: "KOSTEM_204",
         name: { tr: "İlk Elektrikle Çalışan Zeytinyağı İşliği", en: "First Electric Olive Oil Press" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "",
+        image: "/photos/204.jpeg",
         hint: { tr: "İlk elektrikle çalışan zeytinyağı işliğini bul!", en: "Find the first electric olive oil press!" },
         inspectionQuestion: {
             text: { tr: "Polima neyden yapılır?", en: "What is the polima made of?" },
@@ -556,7 +556,7 @@ export const artifactDatabase: Artifact[] = [
         qrCode: "KOSTEM_202",
         name: { tr: "Dönmez Fabrikası", en: "Dönmez Factory" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "",
+        image: "/photos/202.jpeg",
         hint: { tr: "Dönmez Fabrikası'nı bul!", en: "Find the Dönmez Factory!" },
         inspectionQuestion: {
             text: { tr: "Zeytin sıkma işi bitince eski insanlar bu makineleri ne amaçla kullanırdı?", en: "What did people use these machines for after the olive pressing season ended?" },
@@ -587,7 +587,7 @@ export const artifactDatabase: Artifact[] = [
         qrCode: "KOSTEM_207",
         name: { tr: "Zeytinyağlı Sabun Üretim Kazanı", en: "Olive Oil Soap Production Cauldron" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "",
+        image: "/photos/207.jpeg",
         hint: { tr: "Zeytinyağlı sabun üretim kazanını bul!", en: "Find the olive oil soap production cauldron!" },
         inspectionQuestion: {
             text: { tr: "Günümüzde zeytin, yemek ve zeytinyağı haricinde hangi amaçla kullanılır?", en: "Besides eating olives and olive oil, what else is it used for today?" },
@@ -618,7 +618,7 @@ export const artifactDatabase: Artifact[] = [
         qrCode: "KOSTEM_107",
         name: { tr: "Osmanlı Dönemi Zeytinyağı İşliği", en: "Ottoman Era Olive Oil Press" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "",
+        image: "/photos/107.jpeg",
         hint: { tr: "Osmanlı dönemi zeytinyağı işliğini bul!", en: "Find the Ottoman era olive oil press!" },
         inspectionQuestion: {
             text: { tr: "Zeytinyağı kaç kıtada üretilir?", en: "On how many continents is olive oil produced?" },
@@ -649,7 +649,7 @@ export const artifactDatabase: Artifact[] = [
         qrCode: "KOSTEM_103",
         name: { tr: "Ezme Taşları ve Tekneleri", en: "Crushing Stones and Troughs" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "",
+        image: "/photos/103.jpeg",
         hint: { tr: "Ezme taşları ve teknelerini bul!", en: "Find the crushing stones and troughs!" },
         inspectionQuestion: {
             text: { tr: "Ezme taşları nelere göre değişiklik gösterir?", en: "What do crushing stones vary according to?" },
