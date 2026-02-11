@@ -1,6 +1,6 @@
 export type Difficulty = 'easy' | 'medium' | 'hard';
 export type Language = 'tr' | 'en';
-export type GameMode = 'treasure' | 'quiz' | 'qr';
+export type GameMode = 'treasure' | 'quiz' | 'qr' | 'guide';
 export type FontSizeLevel = 0 | 1 | 2; // 0: Normal, 1: Large, 2: Extra Large
 
 export interface LocalizedString {
@@ -45,6 +45,7 @@ export interface GameQuestion {
     museums?: string[];
     hint?: LocalizedString; // Added for Treasure Hunt
     inspectionQuestion?: QuestionData; // Added for Treasure Hunt
+    qrCode?: string; // Added for Validation
 }
 
 export interface UserAnswer {

@@ -107,7 +107,19 @@ export default function App() {
   const [isScanned, setIsScanned] = useState(false);
 
   // Hint State
+  // Hint State
   const [showHint, setShowHint] = useState(false);
+
+  // --- URL Code Handling ---
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    if (code) {
+      handleQrScanResult(code);
+      // Clean up URL without refreshing
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, []);
 
   // Chat States
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -263,25 +275,25 @@ export default function App() {
     }
 
     if (activeQuestion) {
-      // Construct text including options for the question
-      const optionsText = activeQuestion.options.map((opt, i) =>
-        `${String.fromCharCode(65 + i)}) ${opt}`
-      ).join('. ');
+      // Determine what to read based on mode and scan status
+      let textToRead = "";
 
-      const fullTextToRead = `${activeQuestion.text}. ${language === 'tr' ? 'Şıklar' : 'Options'}: ${optionsText}`;
+      if (gameMode === 'treasure' && !isScanned) {
+        // Read Hint for finding the artifact
+        textToRead = `${t.targetFind}. ${t.hintTitle}: ${activeQuestion.hint?.[language] || ""}`;
+      } else {
+        // Read Question & Options
+        const optionsText = activeQuestion.options.map((opt, i) =>
+          `${String.fromCharCode(65 + i)}) ${opt}`
+        ).join('. ');
+        textToRead = `${activeQuestion.text}. ${language === 'tr' ? 'Şıklar' : 'Options'}: ${optionsText}`;
+      }
 
-      generateAndPlayTTS(fullTextToRead);
+      generateAndPlayTTS(textToRead);
     }
 
     // Cleanup function
-    return () => {
-      if (sourceNodeRef.current) {
-        try {
-          sourceNodeRef.current.stop();
-        } catch (e) { /* ignore */ }
-      }
-    };
-  }, [currentScreen, currentQuestionIndex, activeQuestion, ttsEnabled, language]);
+  }, [currentScreen, currentQuestionIndex, activeQuestion, ttsEnabled, language, gameMode, isScanned]);
 
 
   const toggleBonus = () => {
@@ -302,7 +314,20 @@ export default function App() {
 
   const selectGameMode = (mode: GameMode) => {
     setGameMode(mode);
-    setCurrentScreen('level');
+
+    if (mode === 'guide') {
+      // Guide Mode
+      setChatMessages([{ role: 'model', text: t.guideWelcome }]);
+      setCurrentScreen('guide_chat');
+    } else {
+      // Game Modes
+      const hasSeenTutorial = localStorage.getItem('robovapp_tutorial_seen');
+      if (!hasSeenTutorial) {
+        setShowTutorial(true);
+        localStorage.setItem('robovapp_tutorial_seen', 'true');
+      }
+      setCurrentScreen('level');
+    }
   };
 
   const startQrScan = () => {
@@ -324,6 +349,14 @@ export default function App() {
   };
 
   const handleQrScanResult = (decodedText: string) => {
+    // Special Museum Entry QR Code
+    if (decodedText === 'KOSTEM_ENTRY') {
+      setSelectedCity('İzmir');
+      setSelectedMuseum('Köstem Zeytinyağı Müzesi');
+      setCurrentScreen('welcome');
+      return; // Exit function immediately
+    }
+
     // Find artifact by qrCode
     const allArtifacts = [...artifactDatabase, ...genericArtifacts];
     const matched = allArtifacts.find(a => a.qrCode === decodedText.trim());
@@ -331,8 +364,14 @@ export default function App() {
     if (matched) {
       // For treasure hunt mode: mark as scanned and continue current question
       if (gameMode === 'treasure' && currentScreen === 'qr-scan') {
-        setIsScanned(true);
-        setCurrentScreen('game');
+        const activeQ = questionQueue[currentQuestionIndex];
+        // Validate if standard artifact matches or special entry QR for testing
+        if (activeQ && (activeQ.qrCode === matched.qrCode || decodedText === 'KOSTEM_ENTRY')) {
+          setIsScanned(true);
+          setCurrentScreen('game');
+        } else {
+          alert(t.wrongArtifact);
+        }
         return;
       }
 
@@ -435,7 +474,8 @@ export default function App() {
         options: qData.options[language],
         correct: qData.correct,
         museums: artifact.museums,
-        hint: artifact.hint // Add hint for Treasure Mode
+        hint: artifact.hint, // Add hint for Treasure Mode
+        qrCode: artifact.qrCode // Add QR for Validation
       });
     }
 
@@ -852,35 +892,41 @@ export default function App() {
                   <LayoutGrid size={16} className="text-amber-500" /> <span>{t.ready}</span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="flex flex-col gap-4">
                   {/* Treasure Hunt Mode */}
-                  <div className="flex flex-col gap-2">
-                    <button onClick={() => selectGameMode('treasure')} className="flex flex-col items-center justify-center gap-3 bg-stone-800 hover:bg-stone-700 border-2 border-stone-600 hover:border-amber-500 p-4 rounded-2xl transition-all duration-300 group shadow-lg hover:-translate-y-1 relative overflow-hidden h-full">
-                      <div className="w-12 h-12 bg-amber-900/40 rounded-full flex items-center justify-center border border-amber-700 group-hover:bg-amber-600/20 group-hover:border-amber-500 transition-colors">
-                        <MapIcon className="text-amber-500 group-hover:text-amber-400" size={24} />
-                      </div>
-                      <div className="text-center">
-                        <h3 className={`font-bold text-stone-200 mb-1 ${getTextClass('text-sm')}`}>{t.modeTreasureTitle}</h3>
-                        <p className="text-[10px] text-stone-500 leading-tight">{t.modeTreasureDesc}</p>
-                      </div>
-                    </button>
-
-                    {/* Integrated QR Button - RESIZED */}
-                    <button onClick={startQrScan} className="flex items-center justify-center gap-3 bg-stone-800/80 hover:bg-emerald-600 border border-stone-600 hover:border-emerald-500 p-4 rounded-xl transition-all duration-300 group shadow-md">
-                      <QrCode size={20} className="text-stone-400 group-hover:text-white" />
-                      <span className={`font-bold text-stone-300 group-hover:text-white ${getTextClass('text-sm')}`}>{t.scanQR}</span>
-                    </button>
-                  </div>
+                  <button onClick={() => selectGameMode('treasure')} className="group w-full bg-stone-800 hover:bg-stone-700 border-2 border-stone-600 hover:border-amber-500 rounded-2xl p-4 flex items-center gap-4 transition-all duration-300 shadow-lg hover:-translate-y-1">
+                    <div className="w-16 h-16 bg-amber-900/40 rounded-full flex items-center justify-center border border-amber-700 group-hover:bg-amber-600/20 group-hover:border-amber-500 transition-colors shrink-0">
+                      <MapIcon className="text-amber-500 group-hover:text-amber-400" size={32} />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <h3 className={`font-bold text-stone-200 mb-1 ${getTextClass('text-lg')}`}>{t.modeTreasureTitle}</h3>
+                      <p className="text-xs text-stone-500 leading-tight">{t.modeTreasureDesc}</p>
+                    </div>
+                    <ChevronRight className="text-stone-600 group-hover:text-amber-500 transition-colors" size={24} />
+                  </button>
 
                   {/* Quiz Mode */}
-                  <button onClick={() => selectGameMode('quiz')} className="flex flex-col items-center justify-center gap-3 bg-stone-800 hover:bg-stone-700 border-2 border-stone-600 hover:border-emerald-500 p-4 rounded-2xl transition-all duration-300 group shadow-lg hover:-translate-y-1 h-full">
-                    <div className="w-12 h-12 bg-emerald-900/40 rounded-full flex items-center justify-center border border-emerald-700 group-hover:bg-emerald-600/20 group-hover:border-emerald-500 transition-colors">
-                      <BookOpen className="text-emerald-500 group-hover:text-emerald-400" size={24} />
+                  <button onClick={() => selectGameMode('quiz')} className="group w-full bg-stone-800 hover:bg-stone-700 border-2 border-stone-600 hover:border-emerald-500 rounded-2xl p-4 flex items-center gap-4 transition-all duration-300 shadow-lg hover:-translate-y-1">
+                    <div className="w-16 h-16 bg-emerald-900/40 rounded-full flex items-center justify-center border border-emerald-700 group-hover:bg-emerald-600/20 group-hover:border-emerald-500 transition-colors shrink-0">
+                      <BookOpen className="text-emerald-500 group-hover:text-emerald-400" size={32} />
                     </div>
-                    <div className="text-center">
-                      <h3 className={`font-bold text-stone-200 mb-1 ${getTextClass('text-sm')}`}>{t.modeQuizTitle}</h3>
-                      <p className="text-[10px] text-stone-500 leading-tight">{t.modeQuizDesc}</p>
+                    <div className="flex-1 text-left">
+                      <h3 className={`font-bold text-stone-200 mb-1 ${getTextClass('text-lg')}`}>{t.modeQuizTitle}</h3>
+                      <p className="text-xs text-stone-500 leading-tight">{t.modeQuizDesc}</p>
                     </div>
+                    <ChevronRight className="text-stone-600 group-hover:text-emerald-500 transition-colors" size={24} />
+                  </button>
+
+                  {/* Guide Mode */}
+                  <button onClick={() => selectGameMode('guide')} className="group w-full bg-stone-800 hover:bg-stone-700 border-2 border-stone-600 hover:border-violet-500 rounded-2xl p-4 flex items-center gap-4 transition-all duration-300 shadow-lg hover:-translate-y-1">
+                    <div className="w-16 h-16 bg-violet-900/40 rounded-full flex items-center justify-center border border-violet-700 group-hover:bg-violet-600/20 group-hover:border-violet-500 transition-colors shrink-0">
+                      <Bot className="text-violet-500 group-hover:text-violet-400 animate-bounce-slow" size={32} />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <h3 className={`font-bold text-stone-200 mb-1 ${getTextClass('text-lg')}`}>{t.modeGuideTitle}</h3>
+                      <p className="text-xs text-stone-500 leading-tight">{t.modeGuideDesc}</p>
+                    </div>
+                    <ChevronRight className="text-stone-600 group-hover:text-violet-500 transition-colors" size={24} />
                   </button>
                 </div>
               </div>
@@ -937,6 +983,65 @@ export default function App() {
                   </div>
                 </div>
               )}
+            </div>
+          )}
+
+
+
+          {/* SCREEN: GUIDE CHAT */}
+          {currentScreen === 'guide_chat' && (
+            <div className="flex-1 flex flex-col items-center bg-stone-900 h-full relative">
+              {/* Header */}
+              <div className="w-full p-4 bg-stone-800 border-b border-stone-700 flex items-center justify-between shrink-0 z-20">
+                <button onClick={() => setCurrentScreen('welcome')} className="text-stone-400 hover:text-amber-500 flex items-center gap-1">
+                  <ArrowLeft size={20} /> <span className="text-sm font-bold">{t.back}</span>
+                </button>
+                <div className="flex items-center gap-2">
+                  <Bot size={20} className="text-amber-500" />
+                  <h2 className="text-stone-100 font-bold font-serif">{t.modeGuideTitle}</h2>
+                </div>
+                <div className="w-8"></div> {/* Spacer for center alignment */}
+              </div>
+
+              {/* Chat Area - Reusing Chat Logic but Full Screen */}
+              <div className="flex-1 w-full overflow-y-auto p-4 space-y-4 custom-scrollbar pb-24">
+                {chatMessages.map((msg, idx) => (
+                  <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-slide-up`}>
+                    <div className={`max-w-[85%] rounded-2xl p-4 text-sm leading-relaxed shadow-md ${msg.role === 'user' ? 'bg-amber-600 text-white rounded-br-none' : 'bg-stone-800 text-stone-200 rounded-bl-none border border-stone-700'}`}>
+                      {msg.text}
+                    </div>
+                  </div>
+                ))}
+                {isChatLoading && (
+                  <div className="flex justify-start animate-fade-in">
+                    <div className="bg-stone-800 text-stone-400 rounded-2xl rounded-bl-none border border-stone-700 p-4 text-sm flex items-center gap-2">
+                      <Bot size={18} className="animate-bounce" /> {t.chatLoading}
+                    </div>
+                  </div>
+                )}
+                <div ref={chatEndRef} />
+              </div>
+
+              {/* Input Area */}
+              <div className="absolute bottom-0 left-0 w-full p-4 bg-stone-900/95 border-t border-stone-700 backdrop-blur-md">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={chatInput}
+                    onChange={(e) => setChatInput(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleChatSend()}
+                    placeholder={t.chatPlaceholder}
+                    className={`flex-1 bg-stone-800 border border-stone-600 rounded-xl px-4 py-3 text-white placeholder-stone-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 ${getTextClass('text-base')}`}
+                  />
+                  <button
+                    onClick={handleChatSend}
+                    disabled={!chatInput.trim() || isChatLoading}
+                    className="bg-amber-600 disabled:bg-stone-800 disabled:text-stone-600 text-white p-3 rounded-xl hover:bg-amber-500 transition-colors shadow-lg"
+                  >
+                    <Send size={24} />
+                  </button>
+                </div>
+              </div>
             </div>
           )}
 
@@ -1161,22 +1266,26 @@ export default function App() {
                   <div className="text-[10px] text-stone-500 font-bold uppercase tracking-wider">{t.wordCollection}</div>
                   {isCollectionComplete && <div className="text-[10px] text-emerald-400 font-bold animate-pulse">{t.collectionCompleted}</div>}
                 </div>
-                <div className="flex flex-wrap justify-center gap-1">
-                  {collectionStatus.target.split('').map((char, idx, arr) => {
-                    const isSpace = char === ' ';
-                    // Logic: Show letter if index < unlockedCount OR if it's a space
-                    let currentLetterIndex = 0;
-                    for (let i = 0; i < idx; i++) {
-                      if (arr[i] !== ' ') currentLetterIndex++;
+                <div className="flex flex-col items-center gap-2">
+                  {collectionStatus.target.split(' ').map((word, wIdx) => {
+                    let startIndex = 0;
+                    for (let k = 0; k < wIdx; k++) {
+                      startIndex += collectionStatus.target.split(' ')[k].length + 1;
                     }
 
-                    const isUnlocked = currentLetterIndex < collectionStatus.unlockedCount;
-
-                    if (isSpace) return <div key={idx} className="w-4"></div>;
-
                     return (
-                      <div key={idx} className={`w-8 h-8 flex items-center justify-center rounded-lg border text-sm font-bold font-serif transition-all duration-500 ${isUnlocked ? 'bg-amber-500 text-white border-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.5)] transform scale-105' : 'bg-stone-800 text-stone-600 border-stone-700'}`}>
-                        {isUnlocked ? char : '?'}
+                      <div key={wIdx} className="flex flex-wrap justify-center gap-1">
+                        {word.split('').map((char, charIdx) => {
+                          const globalIdx = startIndex + charIdx;
+                          const lettersBefore = collectionStatus.target.slice(0, globalIdx).replace(/\s/g, '').length;
+                          const isUnlocked = lettersBefore < collectionStatus.unlockedCount;
+
+                          return (
+                            <div key={charIdx} className={`w-8 h-8 flex items-center justify-center rounded-lg border text-sm font-bold font-serif transition-all duration-500 ${isUnlocked ? 'bg-amber-500 text-white border-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.5)] transform scale-105' : 'bg-stone-800 text-stone-600 border-stone-700'}`}>
+                              {isUnlocked ? char : '?'}
+                            </div>
+                          );
+                        })}
                       </div>
                     );
                   })}
@@ -1520,78 +1629,9 @@ export default function App() {
 
         {/* CHAT ASSISTANT (ROBO ASISTAN) */}
         {/* Chat Toggle Button - Only visible in welcome screen and positioned above start button */}
-        {currentScreen === 'welcome' && (
-          <>
-            <button
-              onClick={() => setIsChatOpen(!isChatOpen)}
-              className="absolute bottom-36 right-6 z-40 w-14 h-14 rounded-full bg-amber-600 border-2 border-amber-400 text-white shadow-[0_4px_10px_rgba(0,0,0,0.5)] flex items-center justify-center hover:bg-amber-500 hover:scale-110 transition-all duration-300"
-            >
-              {isChatOpen ? <X size={28} /> : <MessageCircle size={28} />}
-            </button>
 
-            {/* Chat Window */}
-            {isChatOpen && (
-              <div className="absolute bottom-24 right-4 left-4 h-[400px] z-50 bg-stone-900/95 backdrop-blur-md border border-stone-700 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-slide-up ring-1 ring-amber-500/30">
-                {/* Chat Header */}
-                <div className="bg-stone-800 p-4 border-b border-stone-700 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-amber-500/20 rounded-full flex items-center justify-center border border-amber-500/50">
-                      <Bot size={18} className="text-amber-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-stone-100 font-bold font-serif text-sm">{t.chatTitle}</h3>
-                      <div className="flex items-center gap-1">
-                        <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-                        <span className="text-xs text-stone-400">Online</span>
-                      </div>
-                    </div>
-                  </div>
-                  <button onClick={() => setIsChatOpen(false)} className="text-stone-400 hover:text-red-400 transition-colors">
-                    <X size={20} />
-                  </button>
-                </div>
 
-                {/* Chat Messages */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-3 custom-scrollbar">
-                  {chatMessages.map((msg, idx) => (
-                    <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                      <div className={`max-w-[80%] rounded-2xl p-3 text-sm ${msg.role === 'user' ? 'bg-amber-600 text-white rounded-br-none' : 'bg-stone-800 text-stone-300 rounded-bl-none border border-stone-700'}`}>
-                        {msg.text}
-                      </div>
-                    </div>
-                  ))}
-                  {isChatLoading && (
-                    <div className="flex justify-start animate-fade-in">
-                      <div className="bg-stone-800 text-stone-400 rounded-2xl rounded-bl-none border border-stone-700 p-3 text-xs flex items-center gap-2">
-                        <Bot size={14} className="animate-bounce" /> {t.chatLoading}
-                      </div>
-                    </div>
-                  )}
-                  <div ref={chatEndRef} />
-                </div>
 
-                {/* Chat Input */}
-                <div className="p-3 bg-stone-800 border-t border-stone-700 flex items-center gap-2">
-                  <input
-                    type="text"
-                    value={chatInput}
-                    onChange={(e) => setChatInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleChatSend()}
-                    placeholder={t.chatPlaceholder}
-                    className={`flex-1 bg-stone-900 border border-stone-600 rounded-xl px-4 py-3 text-white placeholder-stone-500 focus:outline-none focus:border-amber-500 ${getTextClass('text-sm')}`}
-                  />
-                  <button
-                    onClick={handleChatSend}
-                    disabled={!chatInput.trim() || isChatLoading}
-                    className="bg-amber-600 disabled:bg-stone-700 disabled:text-stone-500 text-white p-3 rounded-xl hover:bg-amber-500 transition-colors"
-                  >
-                    <Send size={20} />
-                  </button>
-                </div>
-              </div>
-            )}
-          </>
-        )}
       </div>
     </div>
 
