@@ -1,35 +1,146 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RobovApp - QR Kod Oluşturucu</title>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', sans-serif; background: #1c1917; color: #e7e5e4; padding: 2rem; }
-        h1 { text-align: center; color: #f59e0b; margin-bottom: 0.5rem; font-size: 1.8rem; }
-        .subtitle { text-align: center; color: #78716c; margin-bottom: 2rem; font-size: 0.9rem; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; max-width: 900px; margin: 0 auto; }
-        .card { background: #292524; border: 1px solid #44403c; border-radius: 1rem; padding: 1.5rem; text-align: center; }
-        .card h3 { color: #fbbf24; margin-bottom: 0.25rem; font-size: 1.1rem; }
-        .card .museum { color: #78716c; font-size: 0.75rem; margin-bottom: 1rem; }
-        .card canvas { border: 8px solid white; border-radius: 0.5rem; margin-bottom: 0.75rem; }
-        .card .code { color: #a8a29e; font-family: monospace; font-size: 0.7rem; background: #1c1917; padding: 0.25rem 0.5rem; border-radius: 0.25rem; display: inline-block; }
-        .print-btn { display: block; margin: 2rem auto 0; padding: 0.75rem 2rem; background: #f59e0b; color: #1c1917; border: none; border-radius: 0.5rem; font-weight: bold; cursor: pointer; font-size: 1rem; }
-        .print-btn:hover { background: #d97706; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #1c1917;
+            color: #e7e5e4;
+            padding: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            color: #f59e0b;
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #78716c;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: #292524;
+            border: 1px solid #44403c;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .card h3 {
+            color: #fbbf24;
+            margin-bottom: 0.25rem;
+            font-size: 1.1rem;
+        }
+
+        .card .museum {
+            color: #78716c;
+            font-size: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .card img {
+            border: 8px solid white;
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+            width: 200px;
+            height: 200px;
+            background: white;
+        }
+
+        .card .code {
+            color: #a8a29e;
+            font-family: monospace;
+            font-size: 0.7rem;
+            background: #1c1917;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            display: inline-block;
+        }
+
+        .print-btn {
+            display: block;
+            margin: 2rem auto 0;
+            padding: 0.75rem 2rem;
+            background: #f59e0b;
+            color: #1c1917;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .print-btn:hover {
+            background: #d97706;
+        }
+
         @media print {
-            body { background: white; color: black; padding: 0.5rem; }
-            .print-btn { display: none; }
-            .card { border: 1px solid #ccc; break-inside: avoid; }
-            .card h3 { color: #b45309; }
-            .card .museum { color: #666; }
-            .card .code { background: #f5f5f4; color: #333; }
-            h1 { color: #b45309; }
-            .subtitle { color: #666; }
+            body {
+                background: white;
+                color: black;
+                padding: 0.5rem;
+            }
+
+            .print-btn {
+                display: none;
+            }
+
+            .card {
+                border: 1px solid #ccc;
+                break-inside: avoid;
+            }
+
+            .card h3 {
+                color: #b45309;
+            }
+
+            .card .museum {
+                color: #666;
+            }
+
+            .card .code {
+                background: #f5f5f4;
+                color: #333;
+            }
+
+            .card img {
+                border-color: #ccc;
+            }
+
+            h1 {
+                color: #b45309;
+            }
+
+            .subtitle {
+                color: #666;
+            }
         }
     </style>
 </head>
+
 <body>
     <h1>🏛️ RobovApp QR Kodları</h1>
     <p class="subtitle">Bu QR kodları yazdırıp müzedeki eserlerin yanına yerleştirin.</p>
@@ -53,26 +164,20 @@
         const grid = document.getElementById('qr-grid');
 
         artifacts.forEach(artifact => {
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(artifact.code)}`;
+
             const card = document.createElement('div');
             card.className = 'card';
             card.innerHTML = `
                 <h3>${artifact.name}</h3>
                 <div class="museum">${artifact.museum}</div>
-                <canvas id="qr-${artifact.code}"></canvas>
+                <img src="${qrUrl}" alt="QR: ${artifact.code}" />
                 <br>
                 <span class="code">${artifact.code}</span>
             `;
             grid.appendChild(card);
-
-            // Generate QR code after DOM is ready
-            setTimeout(() => {
-                QRCode.toCanvas(document.getElementById(`qr-${artifact.code}`), artifact.code, {
-                    width: 200,
-                    margin: 1,
-                    color: { dark: '#1c1917', light: '#ffffff' }
-                });
-            }, 100);
         });
     </script>
 </body>
+
 </html>
