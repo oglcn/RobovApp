@@ -304,7 +304,7 @@ export const artifactDatabase: Artifact[] = [
         qrCode: "KOSTEM_ART_3",
         name: { tr: "Zeytinyağı Küpü", en: "Olive Oil Pithos" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "https://images.unsplash.com/photo-1544211681-37ff44f2d346?auto=format&fit=crop&q=80&w=600",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Pithos.jpg",
         hint: { tr: "Topraktan yapılmış büyük karnım var, içimde altın sıvı saklarım.", en: "I have a big belly made of clay, I store golden liquid inside." },
         inspectionQuestion: {
             text: { tr: "Bu küpün dış yüzeyinde görülen koyu lekeler neden oluşmuştur?", en: "Why are there dark stains on the outer surface of this pithos?" },
@@ -334,7 +334,7 @@ export const artifactDatabase: Artifact[] = [
         qrCode: "KOSTEM_ART_4",
         name: { tr: "Bakır Kazan", en: "Copper Cauldron" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "https://images.unsplash.com/photo-1595854341625-f2273f52d1b3?auto=format&fit=crop&q=80&w=600",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Copper_cauldron_for_cooking_pilaf_in_the_Fayzulla_Khojayev_House-Museum.jpg",
         hint: { tr: "Parlak ve kırmızımsı rengim var, sıcak suyla yağı ayırırım.", en: "I have a shiny reddish color, I separate oil with hot water." },
         inspectionQuestion: {
             text: { tr: "Bakır kazanın altında görülen kararmalar neyin izleridir?", en: "What are the dark marks under the copper cauldron traces of?" },
@@ -364,7 +364,7 @@ export const artifactDatabase: Artifact[] = [
         qrCode: "KOSTEM_ART_5",
         name: { tr: "Yağhane Kandili", en: "Oil House Lamp" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "https://images.unsplash.com/photo-1548516635-e93e3b8bbf23?auto=format&fit=crop&q=80&w=600",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Ancient_Roman_oil_lamps.jpg",
         hint: { tr: "Küçücüğüm ama karanlıkta parlak ışık veririm, yakıtım zeytin.", en: "I am tiny but I give bright light in the dark, my fuel is olive." },
         inspectionQuestion: {
             text: { tr: "Kandilin çanak kısmında görülen siyah izler neyin kalıntısıdır?", en: "What are the black marks in the lamp's bowl remnants of?" },
@@ -394,7 +394,7 @@ export const artifactDatabase: Artifact[] = [
         qrCode: "KOSTEM_ART_6",
         name: { tr: "Sabun İmalathanesi", en: "Soap Workshop" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&q=80&w=600",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Chemins_d'Orient_-_Savon_d'alep_olive_oil_soap.jpg",
         hint: { tr: "Zeytinyağından doğarım, köpüklü ve temizim.", en: "I am born from olive oil, foamy and clean." },
         inspectionQuestion: {
             text: { tr: "Sabun kalıplarının üzerindeki damga ne anlama gelir?", en: "What does the stamp on the soap molds mean?" },
@@ -426,7 +426,7 @@ export const genericArtifacts: Artifact[] = [
         id: 101,
         qrCode: "KOSTEM_BONUS_1",
         name: { tr: "Zeytin Hasadı Aletleri", en: "Olive Harvesting Tools" },
-        image: "https://images.unsplash.com/photo-1501004318855-fce75bfce3dc?auto=format&fit=crop&q=80&w=600",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Olive_harvest.jpg",
         hint: { tr: "Dallardan zeytinleri düşürürüm, sepetlere doldururum.", en: "I knock olives off branches, fill them into baskets." },
         inspectionQuestion: {
             text: { tr: "Toplama sırığının ucundaki tarak ne işe yarar?", en: "What is the comb at the end of the harvesting pole used for?" },
@@ -455,7 +455,7 @@ export const genericArtifacts: Artifact[] = [
         id: 102,
         qrCode: "KOSTEM_BONUS_2",
         name: { tr: "Amfora", en: "Amphora" },
-        image: "https://images.unsplash.com/photo-1544211681-37ff44f2d346?auto=format&fit=crop&q=80&w=600",
+        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Amphora_176999.jpg",
         hint: { tr: "İki kulpum var, denizden geldim, zeytinyağı taşıdım.", en: "I have two handles, came from the sea, carried olive oil." },
         inspectionQuestion: {
             text: { tr: "Amforanın alt kısmı neden sivri yapılmıştır?", en: "Why is the bottom of the amphora made pointed?" },
