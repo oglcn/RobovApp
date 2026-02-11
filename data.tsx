@@ -238,249 +238,445 @@ export const bonusQuestionsData = [
     }
 ];
 
+// Old question pool backed up to data_backup.tsx
 export const artifactDatabase: Artifact[] = [
+    // Soru 1: Zeytin Ağacı Kökü (101 Numara)
     {
         id: 1,
-        qrCode: "KOSTEM_ART_1",
-        name: { tr: "Taş Değirmen", en: "Stone Mill" },
+        qrCode: "KOSTEM_101",
+        name: { tr: "Zeytin Ağacı Kökü", en: "Olive Tree Root" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "https://images.unsplash.com/photo-1590016023401-4c04ba47deef?auto=format&fit=crop&q=80&w=600",
-        hint: { tr: "Kocaman ve ağır taşlarım var, zeytinleri ezerim.", en: "I have huge heavy stones, I crush olives." },
+        image: "",
+        hint: { tr: "Müzenin girişindeki büyük zeytin ağacı kökünü bul!", en: "Find the big olive tree root at the museum entrance!" },
         inspectionQuestion: {
-            text: { tr: "Taş değirmenin ortasındaki büyük taş neden yuvarlak şekildedir?", en: "Why is the big stone in the center of the stone mill round?" },
-            options: { tr: ["Dönerek zeytinleri ezmek için", "Daha güzel görünmesi için", "Taşınması kolay olsun diye", "Dekoratif amaçlıdır"], en: ["To crush olives by rotating", "To look better", "To be easier to carry", "For decoration"] },
+            text: { tr: "Bu zeytin ağacı kökü yaklaşık kaç yaşındadır?", en: "Approximately how old is this olive tree root?" },
+            options: { tr: ["1000", "500", "2000", "300"], en: ["1000", "500", "2000", "300"] },
             correct: 0
         },
         questions: {
             easy: {
-                text: { tr: "Taş değirmen ne için kullanılır?", en: "What is a stone mill used for?" },
-                options: { tr: ["Zeytinleri ezmek için", "Un öğütmek için", "Odun kesmek için", "Su taşımak için"], en: ["To crush olives", "To grind flour", "To cut wood", "To carry water"] },
+                text: { tr: "Zeytin ağaçları çok uzun yıllar yaşayabilir mi?", en: "Can olive trees live for very long years?" },
+                options: { tr: ["Evet, binlerce yıl yaşayabilir", "Hayır, en fazla 10 yıl yaşar", "Sadece sıcak ülkelerde yaşar", "Her yıl yeniden dikilir"], en: ["Yes, they can live thousands of years", "No, they live 10 years max", "They only live in hot countries", "They are replanted every year"] },
                 correct: 0
             },
             medium: {
-                text: { tr: "Taş değirmeni döndürmek için eskiden hangi güç kullanılırdı?", en: "What power was used to turn stone mills in the past?" },
-                options: { tr: ["Hayvan gücü (eşek/at)", "Elektrik", "Buhar", "Rüzgar"], en: ["Animal power (donkey/horse)", "Electricity", "Steam", "Wind"] },
+                text: { tr: "Dünyanın en yaşlı zeytin ağaçları hangi bölgelerde bulunur?", en: "In which regions are the world's oldest olive trees found?" },
+                options: { tr: ["Akdeniz bölgesi", "Kuzey Avrupa", "Güney Amerika", "Uzak Doğu"], en: ["Mediterranean region", "Northern Europe", "South America", "Far East"] },
                 correct: 0
             },
             hard: {
-                text: { tr: "Taş değirmenlerde kullanılan büyük alt taşa ne ad verilir?", en: "What is the large bottom stone in stone mills called?" },
-                options: { tr: ["Ana taş (meta)", "Kapak taşı", "Kırma taşı", "Döner taş"], en: ["Base stone (meta)", "Cover stone", "Crushing stone", "Rotating stone"] },
+                text: { tr: "Bir zeytin ağacının yaşı nasıl belirlenir?", en: "How is the age of an olive tree determined?" },
+                options: { tr: ["Gövde çapı ve halka sayısıyla", "Yaprak sayısıyla", "Meyve büyüklüğüyle", "Dal uzunluğuyla"], en: ["By trunk diameter and ring count", "By leaf count", "By fruit size", "By branch length"] },
                 correct: 0
             }
         }
     },
+    // Soru 2: 4 Taşlı Zeytin Sıkacağı (108 Numara)
     {
         id: 2,
-        qrCode: "KOSTEM_ART_2",
-        name: { tr: "Ahşap Baskı Presi", en: "Wooden Screw Press" },
+        qrCode: "KOSTEM_108",
+        name: { tr: "4 Taşlı Zeytin Sıkacağı", en: "4-Stone Olive Press" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "https://images.unsplash.com/photo-1566127444979-b3d2b654e3d7?auto=format&fit=crop&q=80&w=600",
-        hint: { tr: "Ahşap kollarımla sıkıştırır, altın renkli yağı süzdürürüm.", en: "I squeeze with my wooden arms, filtering golden oil." },
+        image: "",
+        hint: { tr: "4 taşlı zeytin sıkacağını bul!", en: "Find the 4-stone olive press!" },
         inspectionQuestion: {
-            text: { tr: "Bu presin ahşap vidası hangi yönde çevrilerek baskı uygulanır?", en: "Which direction is the wooden screw turned to apply pressure?" },
-            options: { tr: ["Saat yönünde", "Saat yönünün tersine", "Yukarı aşağı", "İleri geri"], en: ["Clockwise", "Counterclockwise", "Up and down", "Back and forth"] },
+            text: { tr: "4 Taşlı zeytinyağı işliği ne gücü ile çalışır?", en: "What power does the 4-stone olive oil press operate with?" },
+            options: { tr: ["Hayvan gücü", "Buhar gücü", "Elektrik gücü", "Rüzgar gücü"], en: ["Animal power", "Steam power", "Electric power", "Wind power"] },
             correct: 0
         },
         questions: {
             easy: {
-                text: { tr: "Ezilmiş zeytinlerden yağı çıkarmak için ne yapılır?", en: "What is done to extract oil from crushed olives?" },
-                options: { tr: ["Preste sıkıştırılır", "Ateşte kaynatılır", "Güneşte kurutulur", "Suya atılır"], en: ["Pressed in a press", "Boiled over fire", "Dried in the sun", "Thrown in water"] },
+                text: { tr: "Eskiden zeytinler nasıl ezilirdi?", en: "How were olives crushed in the old days?" },
+                options: { tr: ["Taş değirmenlerle", "Elle tek tek", "Ateşte kaynatarak", "Suya atarak"], en: ["With stone mills", "One by one by hand", "By boiling in fire", "By throwing in water"] },
                 correct: 0
             },
             medium: {
-                text: { tr: "Baskı preslerinde zeytinler neyin içine konularak sıkıştırılırdı?", en: "What were olives placed in before being pressed?" },
-                options: { tr: ["Keçi kılından torbalara (baskı çuvalı)", "Demir kovalara", "Cam kavanozlara", "Tahta kutulara"], en: ["Goat hair bags (press bag)", "Iron buckets", "Glass jars", "Wooden boxes"] },
+                text: { tr: "Hayvan gücüyle çalışan değirmenlerde genellikle hangi hayvanlar kullanılırdı?", en: "Which animals were typically used in animal-powered mills?" },
+                options: { tr: ["Eşek veya at", "Koyun", "Tavuk", "Kedi"], en: ["Donkey or horse", "Sheep", "Chicken", "Cat"] },
                 correct: 0
             },
             hard: {
-                text: { tr: "Vidalı baskı presinin icadı hangi medeniyete atfedilir?", en: "Which civilization is the invention of the screw press attributed to?" },
-                options: { tr: ["Antik Roma", "Hitit", "Osmanlı", "Antik Mısır"], en: ["Ancient Rome", "Hittite", "Ottoman", "Ancient Egypt"] },
+                text: { tr: "Taş değirmenlerde zeytinlerin ezilme işlemine ne ad verilir?", en: "What is the process of crushing olives in stone mills called?" },
+                options: { tr: ["Öğütme/Ezme", "Damıtma", "Fermantasyon", "Kristalizasyon"], en: ["Grinding/Crushing", "Distillation", "Fermentation", "Crystallization"] },
                 correct: 0
             }
         }
     },
+    // Soru 3: Kazdağlılar Zeytinyağı Fabrikası (201 Numara)
     {
         id: 3,
-        qrCode: "KOSTEM_ART_3",
-        name: { tr: "Zeytinyağı Küpü", en: "Olive Oil Pithos" },
+        qrCode: "KOSTEM_201",
+        name: { tr: "Kazdağlılar Zeytinyağı Fabrikası", en: "Kazdağlılar Olive Oil Factory" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Pithos.jpg",
-        hint: { tr: "Topraktan yapılmış büyük karnım var, içimde altın sıvı saklarım.", en: "I have a big belly made of clay, I store golden liquid inside." },
+        image: "",
+        hint: { tr: "Kazdağlılar Zeytinyağı Fabrikası tabelasını bul!", en: "Find the Kazdağlılar Olive Oil Factory sign!" },
         inspectionQuestion: {
-            text: { tr: "Bu küpün dış yüzeyinde görülen koyu lekeler neden oluşmuştur?", en: "Why are there dark stains on the outer surface of this pithos?" },
-            options: { tr: ["Yıllar boyunca yağ sızması", "Boya ile süsleme", "Toprak rengi", "Yangın izi"], en: ["Oil leaking over years", "Paint decoration", "Soil color", "Fire marks"] },
+            text: { tr: "Önünüzdeki zeytinyağı fabrikası ne gücü ile çalışır?", en: "What power does this olive oil factory operate with?" },
+            options: { tr: ["Buhar gücü", "Hayvan gücü", "Elektrik gücü", "Mazot gücü"], en: ["Steam power", "Animal power", "Electric power", "Diesel power"] },
             correct: 0
         },
         questions: {
             easy: {
-                text: { tr: "Zeytinyağı saklamak için kullanılan büyük toprak kaplara ne denir?", en: "What are the large clay containers used to store olive oil called?" },
-                options: { tr: ["Küp", "Tencere", "Bardak", "Tabak"], en: ["Pithos", "Pot", "Glass", "Plate"] },
+                text: { tr: "Buhar gücü ne demektir?", en: "What does steam power mean?" },
+                options: { tr: ["Suyun kaynamasıyla oluşan güç", "Rüzgarın gücü", "Güneş enerjisi", "Elektrik enerjisi"], en: ["Power from boiling water", "Wind power", "Solar energy", "Electric energy"] },
                 correct: 0
             },
             medium: {
-                text: { tr: "Zeytinyağı küpleri neden genellikle toprağa yarı gömülü olarak saklanırdı?", en: "Why were olive oil pithoi usually stored half-buried in the ground?" },
-                options: { tr: ["Serin tutmak ve yağı korumak için", "Deprem olmasın diye", "Fare girmesin diye", "Daha güzel görünsün diye"], en: ["To keep cool and preserve the oil", "To prevent earthquakes", "To keep mice out", "To look better"] },
+                text: { tr: "Buhar makinesi sanayi devriminde hangi alanlarda kullanılmıştır?", en: "In which areas was the steam engine used during the Industrial Revolution?" },
+                options: { tr: ["Fabrikalar ve trenler", "Sadece gemiler", "Sadece tarım", "Sadece madencilik"], en: ["Factories and trains", "Only ships", "Only agriculture", "Only mining"] },
                 correct: 0
             },
             hard: {
-                text: { tr: "Antik dönemde zeytinyağı küplerinin iç yüzeyi ne ile kaplanarak sızdırmazlık sağlanırdı?", en: "What was used to coat the inner surface of olive oil pithoi in ancient times for sealing?" },
-                options: { tr: ["Balmumu veya reçine", "Zeytinyağı", "Kireç", "Kil"], en: ["Beeswax or resin", "Olive oil", "Lime", "Clay"] },
+                text: { tr: "Osmanlı döneminde buhar gücüyle çalışan zeytinyağı fabrikaları ilk hangi bölgede yaygınlaşmıştır?", en: "In which region did steam-powered olive oil factories first become widespread during the Ottoman period?" },
+                options: { tr: ["Ege Bölgesi", "Marmara Bölgesi", "Karadeniz Bölgesi", "Akdeniz Bölgesi"], en: ["Aegean Region", "Marmara Region", "Black Sea Region", "Mediterranean Region"] },
                 correct: 0
             }
         }
     },
+    // Soru 4 + 5: Klazomenai Zeytinyağı Deposu (104 Numara)
     {
         id: 4,
-        qrCode: "KOSTEM_ART_4",
-        name: { tr: "Bakır Kazan", en: "Copper Cauldron" },
+        qrCode: "KOSTEM_104",
+        name: { tr: "Klazomenai Zeytinyağı Deposu", en: "Klazomenai Olive Oil Storage" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Copper_cauldron_for_cooking_pilaf_in_the_Fayzulla_Khojayev_House-Museum.jpg",
-        hint: { tr: "Parlak ve kırmızımsı rengim var, sıcak suyla yağı ayırırım.", en: "I have a shiny reddish color, I separate oil with hot water." },
+        image: "",
+        hint: { tr: "Klazomenai Zeytinyağı Deposu'nu bul!", en: "Find the Klazomenai Olive Oil Storage!" },
         inspectionQuestion: {
-            text: { tr: "Bakır kazanın altında görülen kararmalar neyin izleridir?", en: "What are the dark marks under the copper cauldron traces of?" },
-            options: { tr: ["Ateş/is izleri", "Pas izleri", "Boya kalıntısı", "Yapıştırıcı"], en: ["Fire/soot marks", "Rust marks", "Paint remnants", "Glue"] },
+            text: { tr: "Zeytinyağı saklamak için ne kullanılır?", en: "What is used to store olive oil?" },
+            options: { tr: ["Amforalar", "Plastik bidonlar", "Cam şişeler", "Tahta fıçılar"], en: ["Amphoras", "Plastic containers", "Glass bottles", "Wooden barrels"] },
             correct: 0
         },
         questions: {
             easy: {
-                text: { tr: "Zeytinyağı üretiminde bakır kazan ne için kullanılırdı?", en: "What was the copper cauldron used for in olive oil production?" },
-                options: { tr: ["Yağı sudan ayırmak için", "Zeytin toplamak için", "Yemek pişirmek için", "Su taşımak için"], en: ["To separate oil from water", "To collect olives", "To cook food", "To carry water"] },
+                text: { tr: "Zeytinyağı saklanan ortamın nasıl olması gerekir?", en: "What should the environment for storing olive oil be like?" },
+                options: { tr: ["Karanlık ve serin ortam", "Sıcak ve aydınlık ortam", "Nemli ortam", "Açık hava"], en: ["Dark and cool environment", "Hot and bright environment", "Humid environment", "Open air"] },
                 correct: 0
             },
             medium: {
-                text: { tr: "Zeytinyağı neden suyun üstünde kalır?", en: "Why does olive oil float on top of water?" },
-                options: { tr: ["Yoğunluğu sudan az olduğu için", "Sıcak olduğu için", "Tuzlu olduğu için", "Hafif olduğu için"], en: ["Because its density is less than water", "Because it's hot", "Because it's salty", "Because it's light"] },
+                text: { tr: "Klazomenai antik kenti günümüzde hangi il sınırları içindedir?", en: "Within which city's borders is the ancient city of Klazomenai today?" },
+                options: { tr: ["İzmir", "Aydın", "Muğla", "Antalya"], en: ["İzmir", "Aydın", "Muğla", "Antalya"] },
                 correct: 0
             },
             hard: {
-                text: { tr: "Yağ ve suyun yoğunluk farkından yararlanarak ayrıştırma işlemine ne denir?", en: "What is the process of separation using the density difference between oil and water called?" },
-                options: { tr: ["Dekantasyon", "Damıtma", "Filtrasyon", "Kristalizasyon"], en: ["Decantation", "Distillation", "Filtration", "Crystallization"] },
+                text: { tr: "Amforaların üzerindeki mühürler neyi gösterirdi?", en: "What did the seals on amphoras indicate?" },
+                options: { tr: ["Üretim yeri ve kalite", "Hava durumu", "Geminin rotası", "Deniz derinliği"], en: ["Place of production and quality", "Weather", "Ship's route", "Sea depth"] },
                 correct: 0
             }
         }
     },
+    // Soru 6: Gemi (106 Numara)
     {
         id: 5,
-        qrCode: "KOSTEM_ART_5",
-        name: { tr: "Yağhane Kandili", en: "Oil House Lamp" },
+        qrCode: "KOSTEM_106",
+        name: { tr: "Antik Ticaret Gemisi", en: "Ancient Trade Ship" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Ancient_Roman_oil_lamps.jpg",
-        hint: { tr: "Küçücüğüm ama karanlıkta parlak ışık veririm, yakıtım zeytin.", en: "I am tiny but I give bright light in the dark, my fuel is olive." },
+        image: "",
+        hint: { tr: "Gemiyi bul!", en: "Find the ship!" },
         inspectionQuestion: {
-            text: { tr: "Kandilin çanak kısmında görülen siyah izler neyin kalıntısıdır?", en: "What are the black marks in the lamp's bowl remnants of?" },
-            options: { tr: ["Fitil yanma izi (kurum)", "Boya", "Toprak", "Pas"], en: ["Wick burn marks (soot)", "Paint", "Dirt", "Rust"] },
+            text: { tr: "Antik dönemde geminin içinde neler taşınmıştır?", en: "What was transported inside the ship in ancient times?" },
+            options: { tr: ["Zeytinyağı, şarap ve buğday", "Altın ve gümüş", "Kumaş ve baharat", "Hayvanlar ve yolcular"], en: ["Olive oil, wine and wheat", "Gold and silver", "Fabric and spices", "Animals and passengers"] },
             correct: 0
         },
         questions: {
             easy: {
-                text: { tr: "Elektrik icat edilmeden önce zeytinyağı ne için de kullanılırdı?", en: "Before electricity was invented, what else was olive oil used for?" },
-                options: { tr: ["Aydınlatma (kandil)", "Boya yapımı", "İnşaat", "Ulaşım"], en: ["Lighting (oil lamp)", "Paint making", "Construction", "Transportation"] },
+                text: { tr: "Eski dönemlerde ticaret en çok hangi yolla yapılırdı?", en: "In ancient times, trade was mostly done by which route?" },
+                options: { tr: ["Deniz yoluyla", "Hava yoluyla", "Tren yoluyla", "Uzay yoluyla"], en: ["By sea", "By air", "By train", "By space"] },
                 correct: 0
             },
             medium: {
-                text: { tr: "Antik çağda zeytinyağı kandillerinde fitil olarak ne kullanılırdı?", en: "What was used as a wick in ancient olive oil lamps?" },
-                options: { tr: ["Keten veya pamuk ipliği", "Metal tel", "Tahta çubuk", "Cam parçası"], en: ["Linen or cotton thread", "Metal wire", "Wooden stick", "Glass piece"] },
+                text: { tr: "Akdeniz'de antik dönem ticaretinin en önemli ürünlerinden biri hangisiydi?", en: "What was one of the most important products of ancient Mediterranean trade?" },
+                options: { tr: ["Zeytinyağı", "Çikolata", "Patates", "Domates"], en: ["Olive oil", "Chocolate", "Potato", "Tomato"] },
                 correct: 0
             },
             hard: {
-                text: { tr: "Zeytinyağı, yemek ve aydınlatma dışında antik çağda dini törenlerde ne amaçla kullanılırdı?", en: "Besides food and lighting, what was olive oil used for in ancient religious ceremonies?" },
-                options: { tr: ["Mesh/kutsal yağlama", "Boya yapımı", "Para basımı", "İnşaat harcı"], en: ["Anointing", "Paint making", "Coin minting", "Construction mortar"] },
+                text: { tr: "Antik dönemde Akdeniz ticaretinde zeytinyağı hangi amaçlarla kullanılırdı?", en: "For what purposes was olive oil used in ancient Mediterranean trade?" },
+                options: { tr: ["Yemek, aydınlatma ve kozmetik", "Sadece yemek", "Sadece yakıt", "Sadece ilaç"], en: ["Food, lighting and cosmetics", "Only food", "Only fuel", "Only medicine"] },
                 correct: 0
             }
         }
     },
+    // Soru 7: Zeytinyağı ve Sofralık Zeytin Depolama Alanı (105 Numara)
     {
         id: 6,
-        qrCode: "KOSTEM_ART_6",
-        name: { tr: "Sabun İmalathanesi", en: "Soap Workshop" },
+        qrCode: "KOSTEM_105",
+        name: { tr: "Zeytinyağı ve Sofralık Zeytin Depolama Alanı", en: "Olive Oil and Table Olive Storage Area" },
         museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
-        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Chemins_d'Orient_-_Savon_d'alep_olive_oil_soap.jpg",
-        hint: { tr: "Zeytinyağından doğarım, köpüklü ve temizim.", en: "I am born from olive oil, foamy and clean." },
+        image: "",
+        hint: { tr: "Zeytinyağı ve sofralık zeytin depolama alanını bul!", en: "Find the olive oil and table olive storage area!" },
         inspectionQuestion: {
-            text: { tr: "Sabun kalıplarının üzerindeki damga ne anlama gelir?", en: "What does the stamp on the soap molds mean?" },
-            options: { tr: ["Üreticinin markası", "Ağırlığı", "Tarihi", "Rengi"], en: ["Producer's brand", "Weight", "Date", "Color"] },
+            text: { tr: "Zeytinyağı hangi ülkelerde kutsaldı?", en: "In which countries was olive oil considered sacred?" },
+            options: { tr: ["Antik Yunanistan ve Mısır", "Roma ve Çin", "Hindistan ve Japonya", "İran ve Babil"], en: ["Ancient Greece and Egypt", "Rome and China", "India and Japan", "Iran and Babylon"] },
             correct: 0
         },
         questions: {
             easy: {
-                text: { tr: "Zeytinyağından sadece yemek mi yapılır?", en: "Is olive oil only used for cooking?" },
-                options: { tr: ["Hayır, sabun da yapılır", "Evet, sadece yemek", "Sadece ilaç", "Sadece boya"], en: ["No, soap is also made", "Yes, only food", "Only medicine", "Only paint"] },
+                text: { tr: "Sofralık zeytin ne demektir?", en: "What does table olive mean?" },
+                options: { tr: ["Yemek olarak yenen zeytin", "Boyamak için kullanılan zeytin", "İlaç yapılan zeytin", "Süs olarak kullanılan zeytin"], en: ["Olive eaten as food", "Olive used for painting", "Olive used for medicine", "Olive used for decoration"] },
                 correct: 0
             },
             medium: {
-                text: { tr: "Zeytinyağı sabunu yapımında zeytinyağı hangi madde ile karıştırılır?", en: "What is olive oil mixed with to make olive oil soap?" },
-                options: { tr: ["Kostik soda (sodyum hidroksit)", "Şeker", "Tuz", "Sirke"], en: ["Caustic soda (sodium hydroxide)", "Sugar", "Salt", "Vinegar"] },
+                text: { tr: "Antik Yunanistan'da zeytin dalı neyin sembolüydü?", en: "What did the olive branch symbolize in Ancient Greece?" },
+                options: { tr: ["Barış ve zafer", "Savaş ve güç", "Zenginlik ve şöhret", "Korku ve cesaret"], en: ["Peace and victory", "War and power", "Wealth and fame", "Fear and courage"] },
                 correct: 0
             },
             hard: {
-                text: { tr: "Zeytinyağlı sabun üretiminde Akdeniz'in en ünlü geleneksel merkezlerinden biri neresidir?", en: "Which is one of the most famous traditional centers of olive oil soap production in the Mediterranean?" },
-                options: { tr: ["Halep (Suriye)", "Kahire (Mısır)", "Roma (İtalya)", "Atina (Yunanistan)"], en: ["Aleppo (Syria)", "Cairo (Egypt)", "Rome (Italy)", "Athens (Greece)"] },
+                text: { tr: "Antik Mısır'da zeytinyağı özellikle hangi alanda kullanılırdı?", en: "In which area was olive oil especially used in Ancient Egypt?" },
+                options: { tr: ["Mumyalama ve dini törenler", "Sadece yemek", "İnşaat", "Tekstil boyama"], en: ["Mummification and religious ceremonies", "Only food", "Construction", "Textile dyeing"] },
+                correct: 0
+            }
+        }
+    },
+    // Soru 8: Elektrik Gücü ile Çalışan Yerli Zeytinyağı İşliği (206 Numara)
+    {
+        id: 7,
+        qrCode: "KOSTEM_206",
+        name: { tr: "Elektrik Gücü ile Çalışan Yerli Zeytinyağı İşliği", en: "Domestic Electric Olive Oil Press" },
+        museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
+        image: "",
+        hint: { tr: "Elektrikle çalışan yerli zeytinyağı işliğini bul!", en: "Find the domestic electric olive oil press!" },
+        inspectionQuestion: {
+            text: { tr: "İlk yerli zeytinyağı fabrikası nerede kurulmuştur?", en: "Where was the first domestic olive oil factory established?" },
+            options: { tr: ["Manisa/Akhisar", "İzmir/Bornova", "Aydın/Söke", "Balıkesir/Edremit"], en: ["Manisa/Akhisar", "İzmir/Bornova", "Aydın/Söke", "Balıkesir/Edremit"] },
+            correct: 0
+        },
+        questions: {
+            easy: {
+                text: { tr: "Elektrik gücü ile çalışan makineler hayatımızı nasıl değiştirdi?", en: "How did electric machines change our lives?" },
+                options: { tr: ["İşleri daha hızlı ve kolay hale getirdi", "Hiçbir değişiklik olmadı", "Sadece eğlence için kullanıldı", "Sadece aydınlatma için kullanıldı"], en: ["Made things faster and easier", "No change at all", "Used only for entertainment", "Used only for lighting"] },
+                correct: 0
+            },
+            medium: {
+                text: { tr: "Türkiye'de zeytinyağı üretimi en çok hangi bölgede yapılır?", en: "In which region is olive oil production highest in Turkey?" },
+                options: { tr: ["Ege Bölgesi", "Karadeniz Bölgesi", "İç Anadolu", "Doğu Anadolu"], en: ["Aegean Region", "Black Sea Region", "Central Anatolia", "Eastern Anatolia"] },
+                correct: 0
+            },
+            hard: {
+                text: { tr: "Türkiye'de elektrikle çalışan ilk zeytinyağı fabrikaları hangi yüzyılda yaygınlaşmıştır?", en: "In which century did electric olive oil factories become widespread in Turkey?" },
+                options: { tr: ["20. yüzyıl", "18. yüzyıl", "15. yüzyıl", "21. yüzyıl"], en: ["20th century", "18th century", "15th century", "21st century"] },
+                correct: 0
+            }
+        }
+    },
+    // Soru 9: Zeytin ve Zeytinyağı Kantarları (205 Numara)
+    {
+        id: 8,
+        qrCode: "KOSTEM_205",
+        name: { tr: "Zeytin ve Zeytinyağı Kantarları", en: "Olive and Olive Oil Scales" },
+        museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
+        image: "",
+        hint: { tr: "Zeytin ve zeytinyağı kantarlarını bul!", en: "Find the olive and olive oil scales!" },
+        inspectionQuestion: {
+            text: { tr: "İlk terazi sistemleri nerede kuruldu?", en: "Where were the first scale systems established?" },
+            options: { tr: ["Babil/Mısır", "Roma/İtalya", "Atina/Yunanistan", "Çin/Asya"], en: ["Babylon/Egypt", "Rome/Italy", "Athens/Greece", "China/Asia"] },
+            correct: 0
+        },
+        questions: {
+            easy: {
+                text: { tr: "Kantar ne işe yarar?", en: "What is a scale used for?" },
+                options: { tr: ["Bir şeyin ağırlığını ölçmek", "Uzunluk ölçmek", "Sıcaklık ölçmek", "Zaman ölçmek"], en: ["To measure weight", "To measure length", "To measure temperature", "To measure time"] },
+                correct: 0
+            },
+            medium: {
+                text: { tr: "Zeytinyağı satışında doğru tartı neden önemlidir?", en: "Why is accurate weighing important in olive oil sales?" },
+                options: { tr: ["Adil ticaret ve güven için", "Sadece görüntü için", "Renk belirlemek için", "Koku ölçmek için"], en: ["For fair trade and trust", "Just for appearance", "To determine color", "To measure smell"] },
+                correct: 0
+            },
+            hard: {
+                text: { tr: "Antik Babil'de ölçü birimleri hangi sisteme dayanırdı?", en: "What system were measurement units based on in Ancient Babylon?" },
+                options: { tr: ["Altmışlık (seksagesimal) sisteme", "Onluk sisteme", "İkilik sisteme", "Yirmili sisteme"], en: ["Sexagesimal system", "Decimal system", "Binary system", "Vigesimal system"] },
+                correct: 0
+            }
+        }
+    },
+    // Soru 10: Mazot Gücü ile Çalışan Sistem (203 Numara)
+    {
+        id: 9,
+        qrCode: "KOSTEM_203",
+        name: { tr: "Mazot Gücü ile Çalışan Sistem", en: "Diesel-Powered System" },
+        museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
+        image: "",
+        hint: { tr: "Mazot gücü ile çalışan sistemi bul!", en: "Find the diesel-powered system!" },
+        inspectionQuestion: {
+            text: { tr: "Mazot gücü ile çalışan sistem ilk hangi şehirde kullanıldı?", en: "In which city was the diesel-powered system first used?" },
+            options: { tr: ["İzmir", "İstanbul", "Ankara", "Bursa"], en: ["İzmir", "İstanbul", "Ankara", "Bursa"] },
+            correct: 0
+        },
+        questions: {
+            easy: {
+                text: { tr: "Mazot hangi tür bir yakıttır?", en: "What type of fuel is diesel?" },
+                options: { tr: ["Sıvı yakıt (petrol ürünü)", "Katı yakıt", "Gaz yakıt", "Elektrik enerjisi"], en: ["Liquid fuel (petroleum product)", "Solid fuel", "Gas fuel", "Electric energy"] },
+                correct: 0
+            },
+            medium: {
+                text: { tr: "Mazotlu motorlar buhar makinelerine göre ne avantaj sağlar?", en: "What advantage do diesel engines have over steam engines?" },
+                options: { tr: ["Daha verimli ve taşınabilir", "Daha gürültülü", "Daha yavaş çalışır", "Daha pahalıdır"], en: ["More efficient and portable", "Noisier", "Slower operation", "More expensive"] },
+                correct: 0
+            },
+            hard: {
+                text: { tr: "İzmir zeytinyağı üretiminde neden öncü bir şehir olmuştur?", en: "Why has İzmir been a pioneering city in olive oil production?" },
+                options: { tr: ["Ege'nin zeytin zenginliği ve liman konumu", "Soğuk iklimi", "Dağlık yapısı", "İç bölgede olması"], en: ["Aegean olive richness and port location", "Cold climate", "Mountainous terrain", "Being inland"] },
+                correct: 0
+            }
+        }
+    },
+    // Soru 11: İlk Elektrikle Çalışan Zeytinyağı (204 Numara)
+    {
+        id: 10,
+        qrCode: "KOSTEM_204",
+        name: { tr: "İlk Elektrikle Çalışan Zeytinyağı İşliği", en: "First Electric Olive Oil Press" },
+        museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
+        image: "",
+        hint: { tr: "İlk elektrikle çalışan zeytinyağı işliğini bul!", en: "Find the first electric olive oil press!" },
+        inspectionQuestion: {
+            text: { tr: "Polima neyden yapılır?", en: "What is the polima made of?" },
+            options: { tr: ["Paslanmaz sac", "Bakır", "Ahşap", "Cam"], en: ["Stainless steel sheet", "Copper", "Wood", "Glass"] },
+            correct: 0
+        },
+        questions: {
+            easy: {
+                text: { tr: "Paslanmaz sac neden tercih edilir?", en: "Why is stainless steel preferred?" },
+                options: { tr: ["Paslanmaz ve sağlam olduğu için", "Ucuz olduğu için", "Hafif olduğu için", "Şeffaf olduğu için"], en: ["Because it's rust-proof and strong", "Because it's cheap", "Because it's light", "Because it's transparent"] },
+                correct: 0
+            },
+            medium: {
+                text: { tr: "Gıda üretiminde hangi malzeme hijyen açısından en uygun kabul edilir?", en: "Which material is considered most suitable for hygiene in food production?" },
+                options: { tr: ["Paslanmaz çelik", "Bakır", "Tahta", "Plastik"], en: ["Stainless steel", "Copper", "Wood", "Plastic"] },
+                correct: 0
+            },
+            hard: {
+                text: { tr: "Modern zeytinyağı üretiminde 'soğuk sıkım' ne anlama gelir?", en: "What does 'cold press' mean in modern olive oil production?" },
+                options: { tr: ["27°C altında işleme", "Buzdolabında sıkma", "Kışın üretim", "Soğuk suyla yıkama"], en: ["Processing below 27°C", "Pressing in refrigerator", "Winter production", "Washing with cold water"] },
+                correct: 0
+            }
+        }
+    },
+    // Soru 12: Dönmez Fabrikası (202 Numara)
+    {
+        id: 11,
+        qrCode: "KOSTEM_202",
+        name: { tr: "Dönmez Fabrikası", en: "Dönmez Factory" },
+        museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
+        image: "",
+        hint: { tr: "Dönmez Fabrikası'nı bul!", en: "Find the Dönmez Factory!" },
+        inspectionQuestion: {
+            text: { tr: "Zeytin sıkma işi bitince eski insanlar bu makineleri ne amaçla kullanırdı?", en: "What did people use these machines for after the olive pressing season ended?" },
+            options: { tr: ["Un değirmeni", "Su pompası", "Odun kesme", "Taş öğütme"], en: ["Flour mill", "Water pump", "Wood cutting", "Stone grinding"] },
+            correct: 0
+        },
+        questions: {
+            easy: {
+                text: { tr: "Un değirmeni ne işe yarar?", en: "What is a flour mill used for?" },
+                options: { tr: ["Buğdayı öğütüp un yapmak", "Suyu temizlemek", "Ağaç kesmek", "Yağ çıkarmak"], en: ["To grind wheat into flour", "To clean water", "To cut trees", "To extract oil"] },
+                correct: 0
+            },
+            medium: {
+                text: { tr: "Eski insanlar makineleri birden fazla amaçla kullanırdı. Bu ne avantaj sağlardı?", en: "People used machines for multiple purposes. What advantage did this provide?" },
+                options: { tr: ["Kaynak tasarrufu ve verimlilik", "Daha çok gürültü", "Hiçbir avantajı yoktu", "Makineler daha çabuk bozulurdu"], en: ["Resource saving and efficiency", "More noise", "No advantage", "Machines would break faster"] },
+                correct: 0
+            },
+            hard: {
+                text: { tr: "Zeytinyağı üretim sezonu genellikle hangi aylardadır?", en: "In which months is the olive oil production season usually?" },
+                options: { tr: ["Kasım-Şubat", "Mart-Haziran", "Temmuz-Eylül", "Her mevsim"], en: ["November-February", "March-June", "July-September", "All seasons"] },
+                correct: 0
+            }
+        }
+    },
+    // Soru 13: Zeytinyağlı Sabun Üretim Kazanı (207 Numara)
+    {
+        id: 12,
+        qrCode: "KOSTEM_207",
+        name: { tr: "Zeytinyağlı Sabun Üretim Kazanı", en: "Olive Oil Soap Production Cauldron" },
+        museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
+        image: "",
+        hint: { tr: "Zeytinyağlı sabun üretim kazanını bul!", en: "Find the olive oil soap production cauldron!" },
+        inspectionQuestion: {
+            text: { tr: "Günümüzde zeytin, yemek ve zeytinyağı haricinde hangi amaçla kullanılır?", en: "Besides eating olives and olive oil, what else is it used for today?" },
+            options: { tr: ["Sabun üretimi", "Boya yapımı", "İlaç üretimi", "Yakıt"], en: ["Soap production", "Paint making", "Medicine production", "Fuel"] },
+            correct: 0
+        },
+        questions: {
+            easy: {
+                text: { tr: "Sabun ne işe yarar?", en: "What is soap used for?" },
+                options: { tr: ["Temizlik ve hijyen", "Yemek yapımı", "Boya yapımı", "İnşaat"], en: ["Cleaning and hygiene", "Cooking", "Paint making", "Construction"] },
+                correct: 0
+            },
+            medium: {
+                text: { tr: "Zeytinyağlı sabun cilt için neden faydalıdır?", en: "Why is olive oil soap beneficial for the skin?" },
+                options: { tr: ["Doğal ve nemlendirici olması", "Çok sert olması", "Kimyasal içermesi", "Ucuz olması"], en: ["Being natural and moisturizing", "Being very harsh", "Containing chemicals", "Being cheap"] },
+                correct: 0
+            },
+            hard: {
+                text: { tr: "Dünyanın en eski sabun üretim merkezlerinden biri neresidir?", en: "Where is one of the world's oldest soap production centers?" },
+                options: { tr: ["Halep (Suriye)", "Tokyo (Japonya)", "New York (ABD)", "Berlin (Almanya)"], en: ["Aleppo (Syria)", "Tokyo (Japan)", "New York (USA)", "Berlin (Germany)"] },
+                correct: 0
+            }
+        }
+    },
+    // Soru 14: Osmanlı Dönemi Zeytinyağı İşliği (107 Numara)
+    {
+        id: 13,
+        qrCode: "KOSTEM_107",
+        name: { tr: "Osmanlı Dönemi Zeytinyağı İşliği", en: "Ottoman Era Olive Oil Press" },
+        museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
+        image: "",
+        hint: { tr: "Osmanlı dönemi zeytinyağı işliğini bul!", en: "Find the Ottoman era olive oil press!" },
+        inspectionQuestion: {
+            text: { tr: "Zeytinyağı kaç kıtada üretilir?", en: "On how many continents is olive oil produced?" },
+            options: { tr: ["3 kıta", "5 kıta", "2 kıta", "1 kıta"], en: ["3 continents", "5 continents", "2 continents", "1 continent"] },
+            correct: 0
+        },
+        questions: {
+            easy: {
+                text: { tr: "Osmanlı İmparatorluğu döneminde zeytinyağı önemli miydi?", en: "Was olive oil important during the Ottoman Empire?" },
+                options: { tr: ["Evet, hem yemek hem ticaret için çok önemliydi", "Hayır, hiç kullanılmazdı", "Sadece süs olarak kullanılırdı", "Sadece ilaç olarak kullanılırdı"], en: ["Yes, it was very important for food and trade", "No, it was never used", "It was only used for decoration", "It was only used as medicine"] },
+                correct: 0
+            },
+            medium: {
+                text: { tr: "Zeytinyağı üretilen 3 kıta hangileridir?", en: "Which 3 continents produce olive oil?" },
+                options: { tr: ["Avrupa, Afrika ve Asya", "Amerika, Avrupa ve Avustralya", "Afrika, Asya ve Antarktika", "Avrupa, Amerika ve Asya"], en: ["Europe, Africa and Asia", "America, Europe and Australia", "Africa, Asia and Antarctica", "Europe, America and Asia"] },
+                correct: 0
+            },
+            hard: {
+                text: { tr: "Osmanlı döneminde zeytinyağı üretiminin vergilendirilmesinde kullanılan birime ne denirdi?", en: "What was the unit used for taxing olive oil production in the Ottoman period?" },
+                options: { tr: ["Kıyye", "Kilo", "Litre", "Okka"], en: ["Kıyye", "Kilo", "Liter", "Okka"] },
+                correct: 0
+            }
+        }
+    },
+    // Soru 15: Ezme Taşları ve Tekneleri (103 Numara)
+    {
+        id: 14,
+        qrCode: "KOSTEM_103",
+        name: { tr: "Ezme Taşları ve Tekneleri", en: "Crushing Stones and Troughs" },
+        museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
+        image: "",
+        hint: { tr: "Ezme taşları ve teknelerini bul!", en: "Find the crushing stones and troughs!" },
+        inspectionQuestion: {
+            text: { tr: "Ezme taşları nelere göre değişiklik gösterir?", en: "What do crushing stones vary according to?" },
+            options: { tr: ["Yöreler", "Mevsimler", "Zeytin türleri", "Üretim miktarı"], en: ["Regions", "Seasons", "Olive varieties", "Production volume"] },
+            correct: 0
+        },
+        questions: {
+            easy: {
+                text: { tr: "Ezme taşı ne işe yarar?", en: "What is a crushing stone used for?" },
+                options: { tr: ["Zeytinleri ezmek için", "Ev inşa etmek için", "Yol yapmak için", "Heykel yapmak için"], en: ["To crush olives", "To build houses", "To make roads", "To make sculptures"] },
+                correct: 0
+            },
+            medium: {
+                text: { tr: "Farklı yörelerde ezme taşlarının farklı olmasının sebebi nedir?", en: "Why are crushing stones different in different regions?" },
+                options: { tr: ["Yerel taş türleri ve gelenekler", "Aynı fabrikada üretilmemesi", "Tesadüf", "Renk tercihleri"], en: ["Local stone types and traditions", "Not produced in the same factory", "Coincidence", "Color preferences"] },
+                correct: 0
+            },
+            hard: {
+                text: { tr: "Zeytinyağı üretiminde ezme işleminin kaliteye etkisi nedir?", en: "What is the effect of the crushing process on olive oil quality?" },
+                options: { tr: ["Doğru ezme daha kaliteli yağ verir", "Hiçbir etkisi yoktur", "Sadece renk değişir", "Sadece koku değişir"], en: ["Proper crushing produces higher quality oil", "No effect at all", "Only color changes", "Only smell changes"] },
                 correct: 0
             }
         }
     }
 ];
 
-export const genericArtifacts: Artifact[] = [
-    {
-        id: 101,
-        qrCode: "KOSTEM_BONUS_1",
-        name: { tr: "Zeytin Hasadı Aletleri", en: "Olive Harvesting Tools" },
-        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Olive_harvest.jpg",
-        hint: { tr: "Dallardan zeytinleri düşürürüm, sepetlere doldururum.", en: "I knock olives off branches, fill them into baskets." },
-        inspectionQuestion: {
-            text: { tr: "Toplama sırığının ucundaki tarak ne işe yarar?", en: "What is the comb at the end of the harvesting pole used for?" },
-            options: { tr: ["Dallardan zeytinleri taramak", "Ağacı kesmek", "Toprağı kazmak", "Sepet örmek"], en: ["To comb olives off branches", "To cut the tree", "To dig soil", "To weave baskets"] },
-            correct: 0
-        },
-        questions: {
-            easy: {
-                text: { tr: "Zeytinler ağaçtan nasıl toplanır?", en: "How are olives collected from trees?" },
-                options: { tr: ["Dallar silkelenerek veya elle", "Suda yüzdürülerek", "Makinayla kazılarak", "Rüzgarla uçurularak"], en: ["By shaking branches or by hand", "By floating in water", "By digging with machines", "By blowing with wind"] },
-                correct: 0
-            },
-            medium: {
-                text: { tr: "Zeytin hasadı genellikle yılın hangi aylarında yapılır?", en: "In which months of the year is olive harvesting usually done?" },
-                options: { tr: ["Ekim-Aralık", "Mart-Mayıs", "Haziran-Temmuz", "Ocak-Şubat"], en: ["October-December", "March-May", "June-July", "January-February"] },
-                correct: 0
-            },
-            hard: {
-                text: { tr: "Bir zeytin ağacı ortalama kaç yıl yaşayabilir?", en: "How many years can an olive tree live on average?" },
-                options: { tr: ["500 yıldan fazla", "50 yıl", "10 yıl", "100 yıl"], en: ["More than 500 years", "50 years", "10 years", "100 years"] },
-                correct: 0
-            }
-        }
-    },
-    {
-        id: 102,
-        qrCode: "KOSTEM_BONUS_2",
-        name: { tr: "Amfora", en: "Amphora" },
-        image: "https://commons.wikimedia.org/wiki/Special:FilePath/Amphora_176999.jpg",
-        hint: { tr: "İki kulpum var, denizden geldim, zeytinyağı taşıdım.", en: "I have two handles, came from the sea, carried olive oil." },
-        inspectionQuestion: {
-            text: { tr: "Amforanın alt kısmı neden sivri yapılmıştır?", en: "Why is the bottom of the amphora made pointed?" },
-            options: { tr: ["Gemiye veya toprağa saplamak için", "Daha güzel görünmesi için", "Daha çok sıvı alması için", "Taşıması kolay olsun diye"], en: ["To stick into ship hull or ground", "To look better", "To hold more liquid", "To be easier to carry"] },
-            correct: 0
-        },
-        questions: {
-            easy: {
-                text: { tr: "Antik çağda zeytinyağı nasıl taşınırdı?", en: "How was olive oil transported in ancient times?" },
-                options: { tr: ["Amfora denilen kaplarla", "Plastik şişeyle", "Kağıt poşetle", "Cam kavanozla"], en: ["In vessels called amphoras", "In plastic bottles", "In paper bags", "In glass jars"] },
-                correct: 0
-            },
-            medium: {
-                text: { tr: "Amforaların üzerindeki damgalar ne bilgisi verirdi?", en: "What information did the stamps on amphoras provide?" },
-                options: { tr: ["Üretim yeri ve üretici", "Hava durumu", "Geminin adı", "Denizin derinliği"], en: ["Place and producer", "Weather", "Ship's name", "Sea depth"] },
-                correct: 0
-            },
-            hard: {
-                text: { tr: "Akdeniz'de batık gemilerde en çok bulunan eser tipi hangisidir?", en: "What is the most commonly found artifact type in Mediterranean shipwrecks?" },
-                options: { tr: ["Amfora", "Heykel", "Mozaik", "Sikke"], en: ["Amphora", "Statue", "Mosaic", "Coin"] },
-                correct: 0
-            }
-        }
-    }
-];
+export const genericArtifacts: Artifact[] = [];
 
 export const cities = [
     "İzmir"
