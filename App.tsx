@@ -6,7 +6,9 @@ import {
   Percent, Zap, Gift, User, Save, Medal, Ghost, BookOpen, LayoutGrid, QrCode, ScanLine, Camera, LogOut,
   Volume2, VolumeX, Type, Info, Target, ArrowLeft, Lightbulb
 } from 'lucide-react';
-import { GoogleGenAI, Chat, Modality } from "@google/genai";
+// TEMPORARILY DISABLED: Gemini API calls are disabled for deployment.
+// import { GoogleGenAI, Chat, Modality } from "@google/genai";
+type Chat = any; // placeholder type while API is disabled
 import QrScanner from './QrScanner';
 
 import {
@@ -184,27 +186,14 @@ export default function App() {
     localStorage.setItem('robovapp_font_size', String(level));
   };
 
-  // Initialize Welcome Message & Chat Session when language changes
+  // Initialize Welcome Message when language changes
+  // TEMPORARILY DISABLED: Gemini Chat Session initialization
   useEffect(() => {
     // Set initial welcome message
     setChatMessages([{ role: 'model', text: t.chatWelcome }]);
 
-    // Initialize Gemini Chat Session
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-    const systemInstruction = language === 'tr'
-      ? "Sen Robo Asistan'sın. RobovApp adlı bir müze hazine avı oyununun yardımcı rehberisin. Hedef kitlen çocuklar ve gençler. Arkeoloji, tarih, antik eserler ve müzeler hakkında soruları cevapla. Cevapların kısa, anlaşılır, eğlenceli ve teşvik edici olsun. Konu dışı sorulara nazikçe cevap veremeyeceğini söyle."
-      : "You are Robo Assistant, a helpful guide for a museum scavenger hunt game called RobovApp. Your target audience is children and teenagers. Answer questions about archaeology, history, ancient artifacts, and museums. Keep your answers short, clear, fun, and encouraging. Politely refuse to answer off-topic questions.";
-
-    try {
-      chatSessionRef.current = ai.chats.create({
-        model: 'gemini-3-flash-preview',
-        config: {
-          systemInstruction: systemInstruction,
-        }
-      });
-    } catch (error) {
-      console.error("Chat initialization error:", error);
-    }
+    // Gemini Chat Session is temporarily disabled for secure deployment.
+    // chatSessionRef.current = null;
 
   }, [language]);
 
@@ -214,6 +203,7 @@ export default function App() {
   }, [chatMessages, isChatOpen]);
 
   // --- TTS Helper Function ---
+  // TEMPORARILY DISABLED: TTS uses Gemini API which requires a secure backend.
   const generateAndPlayTTS = async (textToSpeak: string) => {
     // Stop any existing audio first
     if (sourceNodeRef.current) {
@@ -224,49 +214,8 @@ export default function App() {
 
     if (!textToSpeak) return;
 
-    try {
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-      const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash-preview-tts",
-        contents: [{ parts: [{ text: textToSpeak }] }],
-        config: {
-          responseModalities: [Modality.AUDIO],
-          speechConfig: {
-            voiceConfig: {
-              prebuiltVoiceConfig: { voiceName: 'Kore' },
-            },
-          },
-        },
-      });
-
-      const base64Audio = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-
-      if (base64Audio) {
-        if (!audioContextRef.current) {
-          audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
-        }
-
-        // Ensure context is running
-        if (audioContextRef.current.state === 'suspended') {
-          await audioContextRef.current.resume();
-        }
-
-        const audioBuffer = await decodeAudioData(
-          decodeBase64(base64Audio),
-          audioContextRef.current,
-          24000,
-          1
-        );
-
-        const source = audioContextRef.current.createBufferSource();
-        source.buffer = audioBuffer;
-        source.connect(audioContextRef.current.destination);
-        source.start();
-        sourceNodeRef.current = source;
-      }
-    } catch (error) {
-      console.error("Gemini TTS Error:", error);
-    }
+    // TTS is temporarily disabled.
+    console.log("TTS is temporarily disabled. Text:", textToSpeak);
   };
 
   // TTS Effect using Gemini for Questions
@@ -651,6 +600,7 @@ export default function App() {
     setIsScoreSaved(true);
   };
 
+  // TEMPORARILY DISABLED: Chat uses Gemini API which requires a secure backend.
   const handleChatSend = async () => {
     if (!chatInput.trim() || isChatLoading) return;
 
@@ -659,34 +609,15 @@ export default function App() {
     setChatInput('');
     setIsChatLoading(true);
 
-    try {
-      // Create session if it doesn't exist (fallback)
-      if (!chatSessionRef.current) {
-        const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-        chatSessionRef.current = ai.chats.create({
-          model: 'gemini-3-flash-preview',
-          config: {
-            systemInstruction: language === 'tr'
-              ? "Sen Robo Asistan'sın. RobovApp adlı bir müze hazine avı oyununun yardımcı rehberisin. Hedef kitlen çocuklar ve gençler. Arkeoloji, tarih, antik eserler ve müzeler hakkında soruları cevapla. Cevapların kısa, anlaşılır, eğlenceli ve teşvik edici olsun. Konu dışı sorulara nazikçe cevap veremeyeceğini söyle."
-              : "You are Robo Assistant, a helpful guide for a museum scavenger hunt game called RobovApp. Your target audience is children and teenagers. Answer questions about archaeology, history, ancient artifacts, and museums. Keep your answers short, clear, fun, and encouraging. Politely refuse to answer off-topic questions.",
-          }
-        });
-      }
+    // Simulate a short delay for UX
+    await new Promise(resolve => setTimeout(resolve, 500));
 
-      // Use sendMessage from the chat session to maintain history
-      const response = await chatSessionRef.current.sendMessage({ message: userMessage });
+    const comingSoonMsg = language === 'tr'
+      ? "Robo Asistan şu an bakımdadır. Yakında geri döneceğim! 🚀"
+      : "Robo Assistant is currently under maintenance. I'll be back soon! 🚀";
 
-      const text = response.text || (language === 'tr' ? "Üzgünüm, şu an cevap veremiyorum." : "Sorry, I can't answer right now.");
-      setChatMessages(prev => [...prev, { role: 'model', text: text }]);
-    } catch (error) {
-      console.error("Chat error:", error);
-      setChatMessages(prev => [...prev, { role: 'model', text: language === 'tr' ? "Bir hata oluştu, lütfen tekrar dene." : "An error occurred, please try again." }]);
-
-      // Reset session on error in case of invalid state
-      chatSessionRef.current = null;
-    } finally {
-      setIsChatLoading(false);
-    }
+    setChatMessages(prev => [...prev, { role: 'model', text: comingSoonMsg }]);
+    setIsChatLoading(false);
   };
 
   // --- Letter Collection Logic ---
