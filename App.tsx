@@ -81,6 +81,7 @@ export default function App() {
   const [ttsEnabled, setTtsEnabled] = useState(false); // TTS Default State
   const [fontSizeLevel, setFontSizeLevel] = useState<FontSizeLevel>(0);
   const [showTutorial, setShowTutorial] = useState(false);
+  const [isRestoring, setIsRestoring] = useState(true); // Persistence Loading State
 
   // Leaderboard & Result States
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
@@ -195,6 +196,85 @@ export default function App() {
     setFontSizeLevel(level);
     localStorage.setItem('robovapp_font_size', String(level));
   };
+
+  // --- Persistence Logic ---
+
+  // 1. Restore State on Mount
+  useEffect(() => {
+    const restoreState = async () => {
+      try {
+        const savedState = localStorage.getItem('robovapp_state');
+        if (savedState) {
+          const parsed = JSON.parse(savedState);
+
+          // Restore Game Config
+          if (parsed.gameMode) setGameMode(parsed.gameMode);
+          if (parsed.selectedDifficulty) setSelectedDifficulty(parsed.selectedDifficulty);
+          if (parsed.selectedCity) setSelectedCity(parsed.selectedCity);
+          if (parsed.selectedMuseum) setSelectedMuseum(parsed.selectedMuseum);
+          if (parsed.language) setLanguage(parsed.language);
+
+          // Restore Game Progress
+          if (parsed.questionQueue) setQuestionQueue(parsed.questionQueue);
+          if (parsed.currentQuestionIndex !== undefined) setCurrentQuestionIndex(parsed.currentQuestionIndex);
+          if (parsed.userAnswers) setUserAnswers(parsed.userAnswers);
+          if (parsed.score !== undefined) setScore(parsed.score);
+
+          // Restore Jokers & Helpers
+          if (parsed.jokerFiftyUsed !== undefined) setJokerFiftyUsed(parsed.jokerFiftyUsed);
+          if (parsed.jokerDoubleUsed !== undefined) setJokerDoubleUsed(parsed.jokerDoubleUsed);
+          if (parsed.isDoubleChanceActive !== undefined) setIsDoubleChanceActive(parsed.isDoubleChanceActive);
+          if (parsed.eliminatedOptions) setEliminatedOptions(parsed.eliminatedOptions);
+          if (parsed.wrongGuesses) setWrongGuesses(parsed.wrongGuesses);
+          if (parsed.isScanned !== undefined) setIsScanned(parsed.isScanned);
+
+          // Restore Chat
+          if (parsed.chatMessages) setChatMessages(parsed.chatMessages);
+
+          // Restore Screen (Last, to ensure data is ready)
+          if (parsed.currentScreen) setCurrentScreen(parsed.currentScreen);
+        }
+      } catch (e) {
+        console.error("Failed to restore state:", e);
+      } finally {
+        // Small delay to prevent flash if fast
+        setTimeout(() => setIsRestoring(false), 500);
+      }
+    };
+
+    restoreState();
+  }, []);
+
+  // 2. Auto-Save State on Change
+  useEffect(() => {
+    if (isRestoring) return; // Don't save initial defaults during restore
+
+    // Check if we are in a "resumable" state. Maybe don't save 'landing' if empty?
+    // But saving 'landing' is fine, it just resets.
+    // We probably want to save specifically when in 'game', 'level', 'guide_chat'.
+
+    const stateToSave = {
+      // Config
+      gameMode, selectedDifficulty, selectedCity, selectedMuseum, language,
+      // Progress
+      questionQueue, currentQuestionIndex, userAnswers, score,
+      // Jokers
+      jokerFiftyUsed, jokerDoubleUsed, isDoubleChanceActive, eliminatedOptions, wrongGuesses, isScanned,
+      // Chat
+      chatMessages,
+      // Screen
+      currentScreen
+    };
+
+    localStorage.setItem('robovapp_state', JSON.stringify(stateToSave));
+
+  }, [
+    isRestoring,
+    gameMode, selectedDifficulty, selectedCity, selectedMuseum, language,
+    questionQueue, currentQuestionIndex, userAnswers, score,
+    jokerFiftyUsed, jokerDoubleUsed, isDoubleChanceActive, eliminatedOptions, wrongGuesses, isScanned,
+    chatMessages, currentScreen
+  ]);
 
   // Initialize Welcome Message when language changes
   useEffect(() => {
@@ -744,6 +824,17 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-stone-300 font-sans flex justify-center">
+
+      {/* Loading Screen during Restore */}
+      {isRestoring && (
+        <div className="fixed inset-0 z-50 bg-stone-900 flex flex-col items-center justify-center">
+          <div className="w-24 h-24 bg-gradient-to-br from-amber-500 to-orange-700 rounded-full flex items-center justify-center shadow-lg shadow-amber-900/50 animate-bounce cursor-progress mb-6 relative">
+            <Bot size={48} className="text-stone-900 drop-shadow-lg" />
+            <Sparkles className="absolute -top-2 -right-2 text-yellow-200 animate-pulse" size={24} />
+          </div>
+          <p className="text-amber-500 font-serif text-xl animate-pulse">RobovApp Yükleniyor...</p>
+        </div>
+      )}
 
       {/* Background for Desktop area outside the app */}
       <div className="fixed inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")` }}></div>
