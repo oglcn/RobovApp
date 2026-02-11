@@ -936,6 +936,26 @@ export default function App() {
                     </div>
                   </div>
                 </div>
+
+                {/* Divider */}
+                <div className="h-px bg-stone-700 w-full my-2"></div>
+
+                {/* QR Code Generator Link */}
+                <a
+                  href="/generate-qr.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-stone-900/50 p-4 rounded-2xl border border-stone-700 flex items-center gap-3 hover:bg-stone-800/70 transition-colors"
+                >
+                  <div className="p-2 bg-stone-800 rounded-lg border border-stone-600">
+                    <QrCode size={20} className="text-amber-400" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-stone-200 font-bold font-serif">{language === 'tr' ? 'QR Kod Oluştur' : 'Generate QR Codes'}</h3>
+                    <p className="text-stone-500 text-xs">{language === 'tr' ? 'Müze eserleri için yazdırılabilir QR kodları oluştur.' : 'Generate printable QR codes for museum artifacts.'}</p>
+                  </div>
+                  <ArrowRight size={18} className="text-stone-500" />
+                </a>
               </div>
 
               <div className="text-center text-stone-600 text-sm font-serif mt-4 pb-4">RobovApp v1.0</div>
