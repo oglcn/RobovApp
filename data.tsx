@@ -27,11 +27,11 @@ export const TRANSLATIONS = {
         selectLevel: "Seviyeni Seç",
         selectLevelDesc: "Yaşına ve bilgine uygun olanı seç.",
         continue: "Devam Et",
-        selectCity: "Şehri Seç",
-        selectCityDesc: "Hangi ilde hazine avına çıkacaksın?",
-        searchCity: "İl Ara...",
-        notFound: "Aradığınız il bulunamadı.",
-        availableMuseums: "Bu şehirdeki aktif müzeler:",
+        selectCity: "Müzeyi Seç",
+        selectCityDesc: "Hangi müzede hazine avına çıkacaksın?",
+        searchCity: "Ara...",
+        notFound: "Sonuç bulunamadı.",
+        availableMuseums: "Aktif müzeler:",
         available: "Müsait",
         startAdventure: "Macerayı Başlat",
         score: "Puan",
@@ -69,13 +69,13 @@ export const TRANSLATIONS = {
         noRecords: "Henüz kayıt yok. İlk kaşif sen ol!",
         yourRank: "Senin Sıran",
         modeTreasureTitle: "Hazine Avı",
-        modeTreasureDesc: "Şehir şehir gez, müzelerdeki eserleri keşfet.",
+        modeTreasureDesc: "Müzedeki eserleri keşfet, QR kodları tara.",
         modeQuizTitle: "Bilgi Yarışması",
         modeQuizDesc: "Genel tarih bilginle tüm sorulara meydan oku.",
         scanQR: "QR Kod Tara",
-        scanning: "Müze Aranıyor...",
-        scanSuccess: "Müze Tespit Edildi!",
-        scanInstruction: "Kamerayı müze girişindeki QR koda tut.",
+        scanning: "Eser Aranıyor...",
+        scanSuccess: "Eser Tespit Edildi!",
+        scanInstruction: "Kamerayı eserin yanındaki QR koda tut.",
         targetArtifact: "HEDEF ESER",
         targetFind: "Bu eseri bul ve soruyu cevapla!",
         quit: "Çıkış",
@@ -102,7 +102,12 @@ export const TRANSLATIONS = {
         hintContent: "Bu eser şurada sergileniyor: ",
         wordCollection: "KELİME KOLEKSİYONU",
         collectionCompleted: "KOLEKSİYON TAMAMLANDI!",
-        congratsBadge: "Tebrikler! Özel Rozet Kazanıldı."
+        congratsBadge: "Tebrikler! Özel Rozet Kazanıldı.",
+        landingSelectMuseum: "Müze Seç",
+        landingScanQR: "QR Kod ile Giriş",
+        landingSubtitle: "Müze keşif oyununa hoş geldin!",
+        landingOrDivider: "veya",
+        selectedMuseumLabel: "Seçili Müze"
     },
     en: {
         welcomeTitle: "Unlock History's Mystery",
@@ -112,11 +117,11 @@ export const TRANSLATIONS = {
         selectLevel: "Select Level",
         selectLevelDesc: "Choose the one suitable for your age and knowledge.",
         continue: "Continue",
-        selectCity: "Select City",
-        selectCityDesc: "In which city will you hunt for treasures?",
-        searchCity: "Search City...",
-        notFound: "City not found.",
-        availableMuseums: "Active museums in this city:",
+        selectCity: "Select Museum",
+        selectCityDesc: "Which museum will you explore?",
+        searchCity: "Search...",
+        notFound: "No results found.",
+        availableMuseums: "Active museums:",
         available: "Available",
         startAdventure: "Start Adventure",
         score: "Score",
@@ -154,15 +159,15 @@ export const TRANSLATIONS = {
         noRecords: "No records yet. Be the first explorer!",
         yourRank: "Your Rank",
         modeTreasureTitle: "Treasure Hunt",
-        modeTreasureDesc: "Travel cities, discover artifacts in museums.",
+        modeTreasureDesc: "Explore the museum exhibits, scan QR codes.",
         modeQuizTitle: "Quiz Mode",
         modeQuizDesc: "Challenge all questions with your history knowledge.",
         scanQR: "Scan QR Code",
-        scanning: "Searching Museum...",
-        scanSuccess: "Museum Detected!",
-        scanInstruction: "Point camera at the QR code in the museum entrance.",
-        targetArtifact: "TARGET ARTIFACT",
-        targetFind: "Find this artifact and answer the question!",
+        scanning: "Searching Exhibit...",
+        scanSuccess: "Exhibit Detected!",
+        scanInstruction: "Point camera at the QR code next to the exhibit.",
+        targetArtifact: "TARGET EXHIBIT",
+        targetFind: "Find this exhibit and answer the question!",
         quit: "Quit",
         ttsSetting: "Voice Narration (AI)",
         ttsSettingDesc: "Read questions and options aloud with Gemini.",
@@ -178,16 +183,21 @@ export const TRANSLATIONS = {
         step2Title: "Select Level",
         step2Desc: "Choose char suitable for age.",
         step3Title: "Answer & Explore",
-        step3Desc: "Solve questions, know artifacts.",
+        step3Desc: "Solve questions, know exhibits.",
         step4Title: "Be the Leader",
         step4Desc: "Collect points, reach the top!",
         gotIt: "Got it, Let's Start!",
         hint: "Get Hint",
         hintTitle: "HINT",
-        hintContent: "This artifact is displayed in: ",
+        hintContent: "This exhibit is displayed in: ",
         wordCollection: "WORD COLLECTION",
         collectionCompleted: "COLLECTION COMPLETED!",
-        congratsBadge: "Congratulations! Special Badge Earned."
+        congratsBadge: "Congratulations! Special Badge Earned.",
+        landingSelectMuseum: "Select Museum",
+        landingScanQR: "Enter via QR Code",
+        landingSubtitle: "Welcome to the museum exploration game!",
+        landingOrDivider: "or",
+        selectedMuseumLabel: "Selected Museum"
     }
 };
 
@@ -195,208 +205,208 @@ export const TRANSLATIONS = {
 
 export const bonusQuestionsData = [
     {
-        text: { tr: "Müzelerde eserlere dokunmak neden yasaktır?", en: "Why is it forbidden to touch artifacts in museums?" },
-        options: { tr: ["Eserler kirlenebilir ve zarar görebilir", "Alarm sistemi bozulur", "Müze çalışanları kızar", "Dokunmak ücretlidir"], en: ["Artifacts can get dirty and damaged", "Alarm system breaks", "Museum staff gets angry", "Touching costs money"] },
+        text: { tr: "Zeytinyağı hangi meyvenin suyundan elde edilir?", en: "Which fruit's juice is olive oil obtained from?" },
+        options: { tr: ["Zeytin", "Üzüm", "Portakal", "Elma"], en: ["Olive", "Grape", "Orange", "Apple"] },
         correct: 0,
-        image: "https://images.unsplash.com/photo-1566127444979-b3d2b654e3d7?auto=format&fit=crop&q=80&w=600"
+        image: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&q=80&w=600"
     },
     {
-        text: { tr: "Müzeye girmek için genellikle neye ihtiyacımız vardır?", en: "What do we usually need to enter a museum?" },
-        options: { tr: ["Pasaport", "Ehliyet", "Müze Bileti veya Kartı", "Alışveriş Listesi"], en: ["Passport", "Driver's License", "Museum Ticket or Pass", "Shopping List"] },
-        correct: 2,
-        image: "https://images.unsplash.com/photo-1554907984-15263bfd63bd?auto=format&fit=crop&q=80&w=600"
-    },
-    {
-        text: { tr: "Arkeologlar yerin altındaki eserleri bulmak için ne yaparlar?", en: "What do archaeologists do to find artifacts underground?" },
-        options: { tr: ["Balık tutarlar", "Kazı yaparlar", "Resim yaparlar", "Uyurlar"], en: ["Fishing", "Excavation", "Painting", "Sleeping"] },
-        correct: 1,
-        image: "https://images.unsplash.com/photo-1516937941344-00b4ec274c2b?auto=format&fit=crop&q=80&w=600"
-    },
-    {
-        text: { tr: "Eski zamanlardan günümüze kalan tarihi yapı ve eşyalara ne denir?", en: "What are historical structures and items surviving from ancient times called?" },
-        options: { tr: ["Tarihi Eser", "Oyuncak", "Teknoloji", "Moda"], en: ["Historical Artifact", "Toy", "Technology", "Fashion"] },
+        text: { tr: "Zeytinyağı saklanan büyük toprak kaplara ne denir?", en: "What are the large clay containers used to store olive oil called?" },
+        options: { tr: ["Küp", "Testi", "Tencere", "Bardak"], en: ["Pithos/Jar", "Jug", "Pot", "Glass"] },
         correct: 0,
         image: "https://images.unsplash.com/photo-1599930113854-d6d7fd521f10?auto=format&fit=crop&q=80&w=600"
+    },
+    {
+        text: { tr: "Zeytin ağacının yaprağı kışın dökülür mü?", en: "Do olive tree leaves fall in winter?" },
+        options: { tr: ["Hayır, her zaman yeşildir", "Evet, tamamen dökülür", "Sadece yarısı dökülür", "Soğukta donar"], en: ["No, it's evergreen", "Yes, they all fall", "Only half fall", "They freeze in cold"] },
+        correct: 0,
+        image: "https://images.unsplash.com/photo-1445264918150-66a2371142a2?auto=format&fit=crop&q=80&w=600"
+    },
+    {
+        text: { tr: "Zeytinyağı en çok hangi bölgemizde üretilir?", en: "In which region of Turkey is olive oil mostly produced?" },
+        options: { tr: ["Ege Bölgesi", "Karadeniz Bölgesi", "İç Anadolu", "Doğu Anadolu"], en: ["Aegean Region", "Black Sea Region", "Central Anatolia", "Eastern Anatolia"] },
+        correct: 0,
+        image: "https://images.unsplash.com/photo-1501004318855-fce75bfce3dc?auto=format&fit=crop&q=80&w=600"
     }
 ];
 
 export const artifactDatabase: Artifact[] = [
     {
         id: 1,
-        qrCode: "ROBOV_ART_1",
-        name: { tr: "İskender Lahdi", en: "Alexander Sarcophagus" },
-        museums: ["İstanbul Arkeoloji Müzesi", "İstanbul"],
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Alexander_Sarcophagus_-_side_1.jpg/640px-Alexander_Sarcophagus_-_side_1.jpg",
-        hint: { tr: "Kralların savaştığı, mermerden evim. Üzerimde aslan avlayanlar var.", en: "My home is of marble where rulers fought. There are lion hunters upon me." },
+        qrCode: "KOSTEM_ART_1",
+        name: { tr: "Taş Değirmen", en: "Stone Mill" },
+        museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
+        image: "https://images.unsplash.com/photo-1590016023401-4c04ba47deef?auto=format&fit=crop&q=80&w=600",
+        hint: { tr: "Kocaman ve ağır taşlarım var, zeytinleri ezerim.", en: "I have huge heavy stones, I crush olives." },
         inspectionQuestion: {
-            text: { tr: "Lahitin uzun yüzündeki savaş sahnesinde, atlı figürün (İskender) başında ne var?", en: "What is on the head of the horseman figure (Alexander) in the battle scene?" },
-            options: { tr: ["Aslan Postu", "Miğfer", "Taç", "Hiçbir şey"], en: ["Lion Skin", "Helmet", "Crown", "Nothing"] },
+            text: { tr: "Taş değirmenin ortasındaki büyük taş neden yuvarlak şekildedir?", en: "Why is the big stone in the center of the stone mill round?" },
+            options: { tr: ["Dönerek zeytinleri ezmek için", "Daha güzel görünmesi için", "Taşınması kolay olsun diye", "Dekoratif amaçlıdır"], en: ["To crush olives by rotating", "To look better", "To be easier to carry", "For decoration"] },
             correct: 0
         },
         questions: {
             easy: {
-                text: { tr: "Bu lahitin üzerindeki kabartmalarda hangi ünlü komutanın savaş sahneleri anlatılıyor?", en: "Which famous commander's battle scenes are depicted on this sarcophagus?" },
-                options: { tr: ["Büyük İskender", "Jül Sezar", "Fatih Sultan Mehmet", "Napolyon"], en: ["Alexander the Great", "Julius Caesar", "Mehmed the Conqueror", "Napoleon"] },
+                text: { tr: "Taş değirmen ne için kullanılır?", en: "What is a stone mill used for?" },
+                options: { tr: ["Zeytinleri ezmek için", "Un öğütmek için", "Odun kesmek için", "Su taşımak için"], en: ["To crush olives", "To grind flour", "To cut wood", "To carry water"] },
                 correct: 0
             },
             medium: {
-                text: { tr: "İskender Lahdi aslında kime ait olduğu düşünülen bir kral mezarıdır?", en: "Who is this sarcophagus actually believed to belong to?" },
-                options: { tr: ["Büyük İskender", "Abdalonymos", "Kral Midas", "Kral Leonidas"], en: ["Alexander the Great", "Abdalonymus", "King Midas", "King Leonidas"] },
-                correct: 1
+                text: { tr: "Taş değirmeni döndürmek için eskiden hangi güç kullanılırdı?", en: "What power was used to turn stone mills in the past?" },
+                options: { tr: ["Hayvan gücü (eşek/at)", "Elektrik", "Buhar", "Rüzgar"], en: ["Animal power (donkey/horse)", "Electricity", "Steam", "Wind"] },
+                correct: 0
             },
             hard: {
-                text: { tr: "İskender Lahdi, 1887 yılında Osman Hamdi Bey tarafından hangi antik kentte bulunmuştur?", en: "In which ancient city was the Alexander Sarcophagus found by Osman Hamdi Bey in 1887?" },
-                options: { tr: ["Sayda (Sidon)", "Efes", "Troya", "Pergamon"], en: ["Sidon", "Ephesus", "Troy", "Pergamon"] },
+                text: { tr: "Taş değirmenlerde kullanılan büyük alt taşa ne ad verilir?", en: "What is the large bottom stone in stone mills called?" },
+                options: { tr: ["Ana taş (meta)", "Kapak taşı", "Kırma taşı", "Döner taş"], en: ["Base stone (meta)", "Cover stone", "Crushing stone", "Rotating stone"] },
                 correct: 0
             }
         }
     },
     {
         id: 2,
-        qrCode: "ROBOV_ART_2",
-        name: { tr: "Çingene Kızı Mozaiği", en: "The Gypsy Girl Mosaic" },
-        museums: ["Gaziantep Zeugma Mozaik Müzesi", "Gaziantep"],
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Gaziantep_Zeugma_Mosaics_Museum_Gypsy_Girl_1452.jpg/449px-Gaziantep_Zeugma_Mosaics_Museum_Gypsy_Girl_1452.jpg",
-        hint: { tr: "Eksik parçalarım olsa da bakışlarım seni takip eder.", en: "Even though I have missing pieces, my eyes follow you." },
+        qrCode: "KOSTEM_ART_2",
+        name: { tr: "Ahşap Baskı Presi", en: "Wooden Screw Press" },
+        museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
+        image: "https://images.unsplash.com/photo-1566127444979-b3d2b654e3d7?auto=format&fit=crop&q=80&w=600",
+        hint: { tr: "Ahşap kollarımla sıkıştırır, altın renkli yağı süzdürürüm.", en: "I squeeze with my wooden arms, filtering golden oil." },
         inspectionQuestion: {
-            text: { tr: "Çingene Kızı'nın saçlarının arasında hangi bitki figürleri görülmektedir?", en: "Which plant figures are seen among the Gypsy Girl's hair?" },
-            options: { tr: ["Üzüm yaprağı ve asma", "Gül dikenleri", "Zeytin dalları", "Defne yaprakları"], en: ["Grape leaves and vines", "Rose thorns", "Olive branches", "Laurel leaves"] },
+            text: { tr: "Bu presin ahşap vidası hangi yönde çevrilerek baskı uygulanır?", en: "Which direction is the wooden screw turned to apply pressure?" },
+            options: { tr: ["Saat yönünde", "Saat yönünün tersine", "Yukarı aşağı", "İleri geri"], en: ["Clockwise", "Counterclockwise", "Up and down", "Back and forth"] },
             correct: 0
         },
         questions: {
             easy: {
-                text: { tr: "Bu ünlü mozaik, bakışlarıyla meşhurdur. Hangi ilimizdeki Zeugma Müzesi'nin simgesidir?", en: "Famous for her gaze, which city's Zeugma Museum does this mosaic symbolize?" },
-                options: { tr: ["Şanlıurfa", "Gaziantep", "Hatay", "Antalya"], en: ["Şanlıurfa", "Gaziantep", "Hatay", "Antalya"] },
-                correct: 1
+                text: { tr: "Ezilmiş zeytinlerden yağı çıkarmak için ne yapılır?", en: "What is done to extract oil from crushed olives?" },
+                options: { tr: ["Preste sıkıştırılır", "Ateşte kaynatılır", "Güneşte kurutulur", "Suya atılır"], en: ["Pressed in a press", "Boiled over fire", "Dried in the sun", "Thrown in water"] },
+                correct: 0
             },
             medium: {
-                text: { tr: "Çingene Kızı mozaiğinin aslında hangi Yunan tanrıçası veya figürü olduğu tahmin edilmektedir?", en: "Which Greek goddess or figure is the Gypsy Girl actually thought to be?" },
-                options: { tr: ["Medusa", "Gaia", "Athena", "Hera"], en: ["Medusa", "Gaia", "Athena", "Hera"] },
-                correct: 1
+                text: { tr: "Baskı preslerinde zeytinler neyin içine konularak sıkıştırılırdı?", en: "What were olives placed in before being pressed?" },
+                options: { tr: ["Keçi kılından torbalara (baskı çuvalı)", "Demir kovalara", "Cam kavanozlara", "Tahta kutulara"], en: ["Goat hair bags (press bag)", "Iron buckets", "Glass jars", "Wooden boxes"] },
+                correct: 0
             },
             hard: {
-                text: { tr: "Çingene Kızı mozaiği, Zeugma antik kentindeki hangi villanın tabanında bulunmuştur?", en: "In which villa's floor was the Gypsy Girl mosaic found in the ancient city of Zeugma?" },
-                options: { tr: ["Menad Villası", "Poseidon Villası", "Dionysos Villası", "Maenad Villası"], en: ["Menad Villa", "Poseidon Villa", "Dionysos Villa", "Maenad Villa"] },
-                correct: 3
+                text: { tr: "Vidalı baskı presinin icadı hangi medeniyete atfedilir?", en: "Which civilization is the invention of the screw press attributed to?" },
+                options: { tr: ["Antik Roma", "Hitit", "Osmanlı", "Antik Mısır"], en: ["Ancient Rome", "Hittite", "Ottoman", "Ancient Egypt"] },
+                correct: 0
             }
         }
     },
     {
         id: 3,
-        qrCode: "ROBOV_ART_3",
-        name: { tr: "Celsus Kütüphanesi", en: "Library of Celsus" },
-        museums: ["Efes Müzesi", "İzmir"],
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Ephasus_Celsus_Library.JPG/640px-Ephasus_Celsus_Library.JPG",
-        hint: { tr: "Bilginin iki katlı sarayıyım, ama kitaplarım yok artık.", en: "I am the two-story palace of knowledge, but I have no books anymore." },
+        qrCode: "KOSTEM_ART_3",
+        name: { tr: "Zeytinyağı Küpü", en: "Olive Oil Pithos" },
+        museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
+        image: "https://images.unsplash.com/photo-1544211681-37ff44f2d346?auto=format&fit=crop&q=80&w=600",
+        hint: { tr: "Topraktan yapılmış büyük karnım var, içimde altın sıvı saklarım.", en: "I have a big belly made of clay, I store golden liquid inside." },
         inspectionQuestion: {
-            text: { tr: "Kütüphanenin ön cephesinde kaç adet kadın heykeli bulunmaktadır?", en: "How many female statues are on the facade of the library?" },
-            options: { tr: ["4", "2", "6", "8"], en: ["4", "2", "6", "8"] },
+            text: { tr: "Bu küpün dış yüzeyinde görülen koyu lekeler neden oluşmuştur?", en: "Why are there dark stains on the outer surface of this pithos?" },
+            options: { tr: ["Yıllar boyunca yağ sızması", "Boya ile süsleme", "Toprak rengi", "Yangın izi"], en: ["Oil leaking over years", "Paint decoration", "Soil color", "Fire marks"] },
             correct: 0
         },
         questions: {
             easy: {
-                text: { tr: "Bu görkemli kütüphane hangi antik kentimizde yer alır?", en: "In which ancient city is this magnificent library located?" },
-                options: { tr: ["Efes", "Aspendos", "Hierapolis", "Patara"], en: ["Ephesus", "Aspendos", "Hierapolis", "Patara"] },
+                text: { tr: "Zeytinyağı saklamak için kullanılan büyük toprak kaplara ne denir?", en: "What are the large clay containers used to store olive oil called?" },
+                options: { tr: ["Küp", "Tencere", "Bardak", "Tabak"], en: ["Pithos", "Pot", "Glass", "Plate"] },
                 correct: 0
             },
             medium: {
-                text: { tr: "Celsus Kütüphanesi'nin ön cephesindeki heykellerden hangisi 'Bilgeliği' temsil eder?", en: "Which statue on the facade of the Celsus Library represents 'Wisdom'?" },
-                options: { tr: ["Sophia", "Arete", "Ennoia", "Episteme"], en: ["Sophia", "Arete", "Ennoia", "Episteme"] },
+                text: { tr: "Zeytinyağı küpleri neden genellikle toprağa yarı gömülü olarak saklanırdı?", en: "Why were olive oil pithoi usually stored half-buried in the ground?" },
+                options: { tr: ["Serin tutmak ve yağı korumak için", "Deprem olmasın diye", "Fare girmesin diye", "Daha güzel görünsün diye"], en: ["To keep cool and preserve the oil", "To prevent earthquakes", "To keep mice out", "To look better"] },
                 correct: 0
             },
             hard: {
-                text: { tr: "Celsus Kütüphanesi kimin anısına oğlu tarafından yaptırılmıştır?", en: "For whom was the Celsus Library built by his son?" },
-                options: { tr: ["Tiberius Julius Celsus", "Hadrianus", "Marcus Aurelius", "Augustus"], en: ["Tiberius Julius Celsus", "Hadrian", "Marcus Aurelius", "Augustus"] },
+                text: { tr: "Antik dönemde zeytinyağı küplerinin iç yüzeyi ne ile kaplanarak sızdırmazlık sağlanırdı?", en: "What was used to coat the inner surface of olive oil pithoi in ancient times for sealing?" },
+                options: { tr: ["Balmumu veya reçine", "Zeytinyağı", "Kireç", "Kil"], en: ["Beeswax or resin", "Olive oil", "Lime", "Clay"] },
                 correct: 0
             }
         }
     },
     {
         id: 4,
-        qrCode: "ROBOV_ART_4",
-        name: { tr: "Hitit Güneşi Kursu", en: "Hittite Sun Course" },
-        museums: ["Anadolu Medeniyetleri Müzesi", "Ankara"],
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Ankara_Museum_of_Anatolian_Civilizations_9660.jpg/640px-Ankara_Museum_of_Anatolian_Civilizations_9660.jpg",
-        hint: { tr: "Tunçtan yapıldım, geyiğim var, boğam var. Güneşi taşırım.", en: "Made of bronze, I have a deer, I have a bull. I carry the sun." },
+        qrCode: "KOSTEM_ART_4",
+        name: { tr: "Bakır Kazan", en: "Copper Cauldron" },
+        museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
+        image: "https://images.unsplash.com/photo-1595854341625-f2273f52d1b3?auto=format&fit=crop&q=80&w=600",
+        hint: { tr: "Parlak ve kırmızımsı rengim var, sıcak suyla yağı ayırırım.", en: "I have a shiny reddish color, I separate oil with hot water." },
         inspectionQuestion: {
-            text: { tr: "Kursun alt kısmındaki 'H' şeklindeki parçalar neyi sembolize eder?", en: "What do the 'H' shaped pieces at the bottom of the course symbolize?" },
-            options: { tr: ["Boğa Boynuzları", "İnsan Kolları", "Ağaç Dalları", "Nehirler"], en: ["Bull Horns", "Human Arms", "Tree Branches", "Rivers"] },
+            text: { tr: "Bakır kazanın altında görülen kararmalar neyin izleridir?", en: "What are the dark marks under the copper cauldron traces of?" },
+            options: { tr: ["Ateş/is izleri", "Pas izleri", "Boya kalıntısı", "Yapıştırıcı"], en: ["Fire/soot marks", "Rust marks", "Paint remnants", "Glue"] },
             correct: 0
         },
         questions: {
             easy: {
-                text: { tr: "Bu sembol, Anadolu'nun en eski uygarlıklarından biri olan hangi medeniyete aittir?", en: "This symbol belongs to which of the oldest civilizations of Anatolia?" },
-                options: { tr: ["Lidyalılar", "Hititler (Hattiler)", "Urartular", "Sümerler"], en: ["Lydians", "Hittites (Hattians)", "Urartians", "Sumerians"] },
-                correct: 1
+                text: { tr: "Zeytinyağı üretiminde bakır kazan ne için kullanılırdı?", en: "What was the copper cauldron used for in olive oil production?" },
+                options: { tr: ["Yağı sudan ayırmak için", "Zeytin toplamak için", "Yemek pişirmek için", "Su taşımak için"], en: ["To separate oil from water", "To collect olives", "To cook food", "To carry water"] },
+                correct: 0
             },
             medium: {
-                text: { tr: "Hitit Güneşi kursları genellikle hangi malzemeden yapılmıştır?", en: "What material were Hittite Sun Courses usually made of?" },
-                options: { tr: ["Altın", "Tunç", "Demir", "Gümüş"], en: ["Gold", "Bronze", "Iron", "Silver"] },
-                correct: 1
+                text: { tr: "Zeytinyağı neden suyun üstünde kalır?", en: "Why does olive oil float on top of water?" },
+                options: { tr: ["Yoğunluğu sudan az olduğu için", "Sıcak olduğu için", "Tuzlu olduğu için", "Hafif olduğu için"], en: ["Because its density is less than water", "Because it's hot", "Because it's salty", "Because it's light"] },
+                correct: 0
             },
             hard: {
-                text: { tr: "Hitit Güneşi kursu ilk olarak hangi kazı alanında bulunmuştur?", en: "In which excavation site was the Hittite Sun Course first found?" },
-                options: { tr: ["Alacahöyük", "Hattuşa", "Kültepe", "Gordion"], en: ["Alacahöyük", "Hattusa", "Kültepe", "Gordion"] },
+                text: { tr: "Yağ ve suyun yoğunluk farkından yararlanarak ayrıştırma işlemine ne denir?", en: "What is the process of separation using the density difference between oil and water called?" },
+                options: { tr: ["Dekantasyon", "Damıtma", "Filtrasyon", "Kristalizasyon"], en: ["Decantation", "Distillation", "Filtration", "Crystallization"] },
                 correct: 0
             }
         }
     },
     {
         id: 5,
-        qrCode: "ROBOV_ART_5",
-        name: { tr: "Troya Hazineleri", en: "Treasure of Troy" },
-        museums: ["Troya Müzesi", "Çanakkale"],
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Treasure_of_Priam_AO_1.jpg/640px-Treasure_of_Priam_AO_1.jpg",
-        hint: { tr: "Surların arkasında saklıydım, savaşla değil hileyle alındım.", en: "I was hidden behind walls, taken not by war but by trickery." },
+        qrCode: "KOSTEM_ART_5",
+        name: { tr: "Yağhane Kandili", en: "Oil House Lamp" },
+        museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
+        image: "https://images.unsplash.com/photo-1548516635-e93e3b8bbf23?auto=format&fit=crop&q=80&w=600",
+        hint: { tr: "Küçücüğüm ama karanlıkta parlak ışık veririm, yakıtım zeytin.", en: "I am tiny but I give bright light in the dark, my fuel is olive." },
         inspectionQuestion: {
-            text: { tr: "Hazinenin en dikkat çeken parçası olan 'diadem' (başlık) hangi malzemeden yapılmıştır?", en: "What material is the 'diadem' (headdress), the most striking piece of the treasure, made of?" },
-            options: { tr: ["Altın", "Gümüş", "Elektron", "Bakır"], en: ["Gold", "Silver", "Electrum", "Copper"] },
+            text: { tr: "Kandilin çanak kısmında görülen siyah izler neyin kalıntısıdır?", en: "What are the black marks in the lamp's bowl remnants of?" },
+            options: { tr: ["Fitil yanma izi (kurum)", "Boya", "Toprak", "Pas"], en: ["Wick burn marks (soot)", "Paint", "Dirt", "Rust"] },
             correct: 0
         },
         questions: {
             easy: {
-                text: { tr: "Troya Savaşı'nı konu alan ünlü destan hangisidir?", en: "What is the famous epic about the Trojan War?" },
-                options: { tr: ["İlyada", "Odysseia", "Aeneas", "Gılgamış"], en: ["Iliad", "Odyssey", "Aeneid", "Gilgamesh"] },
+                text: { tr: "Elektrik icat edilmeden önce zeytinyağı ne için de kullanılırdı?", en: "Before electricity was invented, what else was olive oil used for?" },
+                options: { tr: ["Aydınlatma (kandil)", "Boya yapımı", "İnşaat", "Ulaşım"], en: ["Lighting (oil lamp)", "Paint making", "Construction", "Transportation"] },
                 correct: 0
             },
             medium: {
-                text: { tr: "Troya antik kenti hangi ilimiz sınırları içerisindedir?", en: "In which province is the ancient city of Troy located?" },
-                options: { tr: ["İzmir", "Balıkesir", "Çanakkale", "Manisa"], en: ["İzmir", "Balıkesir", "Çanakkale", "Manisa"] },
-                correct: 2
+                text: { tr: "Antik çağda zeytinyağı kandillerinde fitil olarak ne kullanılırdı?", en: "What was used as a wick in ancient olive oil lamps?" },
+                options: { tr: ["Keten veya pamuk ipliği", "Metal tel", "Tahta çubuk", "Cam parçası"], en: ["Linen or cotton thread", "Metal wire", "Wooden stick", "Glass piece"] },
+                correct: 0
             },
             hard: {
-                text: { tr: "Troya kazılarını başlatan ve hazineleri kaçıran amatör arkeolog kimdir?", en: "Who was the amateur archaeologist who started the Troy excavations and smuggled the treasures?" },
-                options: { tr: ["Heinrich Schliemann", "Wilhelm Dörpfeld", "Manfred Korfmann", "Frank Calvert"], en: ["Heinrich Schliemann", "Wilhelm Dörpfeld", "Manfred Korfmann", "Frank Calvert"] },
+                text: { tr: "Zeytinyağı, yemek ve aydınlatma dışında antik çağda dini törenlerde ne amaçla kullanılırdı?", en: "Besides food and lighting, what was olive oil used for in ancient religious ceremonies?" },
+                options: { tr: ["Mesh/kutsal yağlama", "Boya yapımı", "Para basımı", "İnşaat harcı"], en: ["Anointing", "Paint making", "Coin minting", "Construction mortar"] },
                 correct: 0
             }
         }
     },
     {
         id: 6,
-        qrCode: "ROBOV_ART_6",
-        name: { tr: "Göbeklitepe", en: "Gobekli Tepe" },
-        museums: ["Şanlıurfa Müzesi", "Şanlıurfa"],
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Gobekli_Tepe%2C_Urfa.jpg/640px-Gobekli_Tepe%2C_Urfa.jpg",
-        hint: { tr: "Tarihin sıfır noktasıyım. T şeklinde taşlarım var.", en: "I am the zero point of history. I have T-shaped stones." },
+        qrCode: "KOSTEM_ART_6",
+        name: { tr: "Sabun İmalathanesi", en: "Soap Workshop" },
+        museums: ["Köstem Zeytinyağı Müzesi", "İzmir"],
+        image: "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?auto=format&fit=crop&q=80&w=600",
+        hint: { tr: "Zeytinyağından doğarım, köpüklü ve temizim.", en: "I am born from olive oil, foamy and clean." },
         inspectionQuestion: {
-            text: { tr: "T biçimli sütunlar neyi temsil etmektedir (stilize olarak)?", en: "What do the T-shaped pillars represent (stylized)?" },
-            options: { tr: ["İnsan", "Ağaç", "Dağ", "Tapınak"], en: ["Human", "Tree", "Mountain", "Temple"] },
+            text: { tr: "Sabun kalıplarının üzerindeki damga ne anlama gelir?", en: "What does the stamp on the soap molds mean?" },
+            options: { tr: ["Üreticinin markası", "Ağırlığı", "Tarihi", "Rengi"], en: ["Producer's brand", "Weight", "Date", "Color"] },
             correct: 0
         },
         questions: {
             easy: {
-                text: { tr: "Tarihin sıfır noktası olarak bilinen Göbeklitepe hangi ilimizdedir?", en: "In which province is Göbeklitepe, known as the zero point of history?" },
-                options: { tr: ["Mardin", "Diyarbakır", "Şanlıurfa", "Adıyaman"], en: ["Mardin", "Diyarbakır", "Şanlıurfa", "Adıyaman"] },
-                correct: 2
+                text: { tr: "Zeytinyağından sadece yemek mi yapılır?", en: "Is olive oil only used for cooking?" },
+                options: { tr: ["Hayır, sabun da yapılır", "Evet, sadece yemek", "Sadece ilaç", "Sadece boya"], en: ["No, soap is also made", "Yes, only food", "Only medicine", "Only paint"] },
+                correct: 0
             },
             medium: {
-                text: { tr: "Göbeklitepe'deki dikilitaşlar hangi harf şeklindedir?", en: "What letter shape are the obelisks in Göbeklitepe?" },
-                options: { tr: ["T Şeklinde", "L Şeklinde", "U Şeklinde", "I Şeklinde"], en: ["T Shaped", "L Shaped", "U Shaped", "I Shaped"] },
+                text: { tr: "Zeytinyağı sabunu yapımında zeytinyağı hangi madde ile karıştırılır?", en: "What is olive oil mixed with to make olive oil soap?" },
+                options: { tr: ["Kostik soda (sodyum hidroksit)", "Şeker", "Tuz", "Sirke"], en: ["Caustic soda (sodium hydroxide)", "Sugar", "Salt", "Vinegar"] },
                 correct: 0
             },
             hard: {
-                text: { tr: "Göbeklitepe'yi keşfeden ve kazıları yöneten Alman arkeolog kimdir?", en: "Who is the German archaeologist who discovered Göbeklitepe and led the excavations?" },
-                options: { tr: ["Klaus Schmidt", "Ian Hodder", "James Mellaart", "Ekrem Akurgal"], en: ["Klaus Schmidt", "Ian Hodder", "James Mellaart", "Ekrem Akurgal"] },
+                text: { tr: "Zeytinyağlı sabun üretiminde Akdeniz'in en ünlü geleneksel merkezlerinden biri neresidir?", en: "Which is one of the most famous traditional centers of olive oil soap production in the Mediterranean?" },
+                options: { tr: ["Halep (Suriye)", "Kahire (Mısır)", "Roma (İtalya)", "Atina (Yunanistan)"], en: ["Aleppo (Syria)", "Cairo (Egypt)", "Rome (Italy)", "Athens (Greece)"] },
                 correct: 0
             }
         }
@@ -406,58 +416,58 @@ export const artifactDatabase: Artifact[] = [
 export const genericArtifacts: Artifact[] = [
     {
         id: 101,
-        qrCode: "ROBOV_BONUS_1",
-        name: { tr: "Antik Amfora", en: "Ancient Amphora" },
-        image: "https://images.unsplash.com/photo-1544211681-37ff44f2d346?auto=format&fit=crop&q=80&w=600",
-        hint: { tr: "Denizlerin dibinden çıktım, zeytinyağı taşıdım.", en: "I came from the bottom of the seas, carried olive oil." },
+        qrCode: "KOSTEM_BONUS_1",
+        name: { tr: "Zeytin Hasadı Aletleri", en: "Olive Harvesting Tools" },
+        image: "https://images.unsplash.com/photo-1501004318855-fce75bfce3dc?auto=format&fit=crop&q=80&w=600",
+        hint: { tr: "Dallardan zeytinleri düşürürüm, sepetlere doldururum.", en: "I knock olives off branches, fill them into baskets." },
         inspectionQuestion: {
-            text: { tr: "Amforanın alt kısmı neden sivri yapılmıştır?", en: "Why is the bottom of the amphora made pointed?" },
-            options: { tr: ["Gemiye veya toprağa saplamak için", "Daha güzel görünmesi için", "Daha çok sıvı alması için", "Taşıması kolay olsun diye"], en: ["To stick into the ship or ground", "To look better", "To hold more liquid", "To be easier to carry"] },
+            text: { tr: "Toplama sırığının ucundaki tarak ne işe yarar?", en: "What is the comb at the end of the harvesting pole used for?" },
+            options: { tr: ["Dallardan zeytinleri taramak", "Ağacı kesmek", "Toprağı kazmak", "Sepet örmek"], en: ["To comb olives off branches", "To cut the tree", "To dig soil", "To weave baskets"] },
             correct: 0
         },
         questions: {
             easy: {
-                text: { tr: "Arkeologlar kazı yaparken eserlere zarar vermemek için genellikle hangi aleti kullanırlar?", en: "What tool do archaeologists usually use to avoid damaging artifacts during excavation?" },
-                options: { tr: ["Balta", "Fırça ve Spatula", "Kepçe", "Matkap"], en: ["Axe", "Brush and Spatula", "Excavator", "Drill"] },
-                correct: 1
+                text: { tr: "Zeytinler ağaçtan nasıl toplanır?", en: "How are olives collected from trees?" },
+                options: { tr: ["Dallar silkelenerek veya elle", "Suda yüzdürülerek", "Makinayla kazılarak", "Rüzgarla uçurularak"], en: ["By shaking branches or by hand", "By floating in water", "By digging with machines", "By blowing with wind"] },
+                correct: 0
             },
             medium: {
-                text: { tr: "Amforalar antik çağda en çok ne taşımak için kullanılırdı?", en: "What were amphoras mostly used to carry in ancient times?" },
-                options: { tr: ["Zeytinyağı ve Şarap", "Altın", "Giysi", "Silah"], en: ["Olive Oil and Wine", "Gold", "Clothes", "Weapons"] },
+                text: { tr: "Zeytin hasadı genellikle yılın hangi aylarında yapılır?", en: "In which months of the year is olive harvesting usually done?" },
+                options: { tr: ["Ekim-Aralık", "Mart-Mayıs", "Haziran-Temmuz", "Ocak-Şubat"], en: ["October-December", "March-May", "June-July", "January-February"] },
                 correct: 0
             },
             hard: {
-                text: { tr: "Su altı arkeolojisinde batıklardan en çok çıkarılan eser grubu hangisidir?", en: "Which group of artifacts is most frequently recovered from shipwrecks in underwater archaeology?" },
-                options: { tr: ["Amforalar", "Heykeller", "Lahitler", "Mozaikler"], en: ["Amphoras", "Statues", "Sarcophagi", "Mosaics"] },
+                text: { tr: "Bir zeytin ağacı ortalama kaç yıl yaşayabilir?", en: "How many years can an olive tree live on average?" },
+                options: { tr: ["500 yıldan fazla", "50 yıl", "10 yıl", "100 yıl"], en: ["More than 500 years", "50 years", "10 years", "100 years"] },
                 correct: 0
             }
         }
     },
     {
         id: 102,
-        qrCode: "ROBOV_BONUS_2",
-        name: { tr: "Antik Sikke", en: "Ancient Coin" },
-        image: "https://images.unsplash.com/photo-1620409093863-745a33c1cb51?auto=format&fit=crop&q=80&w=600",
-        hint: { tr: "Ticareti başlattım, elden ele dolaştım.", en: "I started trade, circulated from hand to hand." },
+        qrCode: "KOSTEM_BONUS_2",
+        name: { tr: "Amfora", en: "Amphora" },
+        image: "https://images.unsplash.com/photo-1544211681-37ff44f2d346?auto=format&fit=crop&q=80&w=600",
+        hint: { tr: "İki kulpum var, denizden geldim, zeytinyağı taşıdım.", en: "I have two handles, came from the sea, carried olive oil." },
         inspectionQuestion: {
-            text: { tr: "Bu sikkenin üzerindeki kabartma ne tür bir figürdür?", en: "What kind of figure is the relief on this coin?" },
-            options: { tr: ["İnsan başı (Profil)", "Aslan", "Gemi", "Tapınak"], en: ["Human head (Profile)", "Lion", "Ship", "Temple"] },
+            text: { tr: "Amforanın alt kısmı neden sivri yapılmıştır?", en: "Why is the bottom of the amphora made pointed?" },
+            options: { tr: ["Gemiye veya toprağa saplamak için", "Daha güzel görünmesi için", "Daha çok sıvı alması için", "Taşıması kolay olsun diye"], en: ["To stick into ship hull or ground", "To look better", "To hold more liquid", "To be easier to carry"] },
             correct: 0
         },
         questions: {
             easy: {
-                text: { tr: "Tarihte ilk parayı (sikkeyi) basan Anadolu uygarlığı hangisidir?", en: "Which Anatolian civilization minted the first coin in history?" },
-                options: { tr: ["Lidyalılar", "Frigler", "İyonlar", "Urartular"], en: ["Lydians", "Phrygians", "Ionians", "Urartians"] },
+                text: { tr: "Antik çağda zeytinyağı nasıl taşınırdı?", en: "How was olive oil transported in ancient times?" },
+                options: { tr: ["Amfora denilen kaplarla", "Plastik şişeyle", "Kağıt poşetle", "Cam kavanozla"], en: ["In vessels called amphoras", "In plastic bottles", "In paper bags", "In glass jars"] },
                 correct: 0
             },
             medium: {
-                text: { tr: "Sikkelerin üzerindeki kabartmaları inceleyen bilim dalı nedir?", en: "What is the science that studies the reliefs on coins?" },
-                options: { tr: ["Nümismatik", "Epigrafi", "Paleografi", "Antropoloji"], en: ["Numismatics", "Epigraphy", "Paleography", "Anthropology"] },
+                text: { tr: "Amforaların üzerindeki damgalar ne bilgisi verirdi?", en: "What information did the stamps on amphoras provide?" },
+                options: { tr: ["Üretim yeri ve üretici", "Hava durumu", "Geminin adı", "Denizin derinliği"], en: ["Place and producer", "Weather", "Ship's name", "Sea depth"] },
                 correct: 0
             },
             hard: {
-                text: { tr: "Elektron adı verilen ilk sikkeler hangi metallerin alaşımıdır?", en: "What metals are the first coins called electrum an alloy of?" },
-                options: { tr: ["Altın ve Gümüş", "Bakır ve Kalay", "Demir ve Çinko", "Altın ve Bakır"], en: ["Gold and Silver", "Copper and Tin", "Iron and Zinc", "Gold and Copper"] },
+                text: { tr: "Akdeniz'de batık gemilerde en çok bulunan eser tipi hangisidir?", en: "What is the most commonly found artifact type in Mediterranean shipwrecks?" },
+                options: { tr: ["Amfora", "Heykel", "Mozaik", "Sikke"], en: ["Amphora", "Statue", "Mosaic", "Coin"] },
                 correct: 0
             }
         }
@@ -465,18 +475,11 @@ export const genericArtifacts: Artifact[] = [
 ];
 
 export const cities = [
-    "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir",
-    "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli",
-    "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkâri",
-    "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir",
-    "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş", "Nevşehir",
-    "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Tekirdağ", "Tokat",
-    "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman",
-    "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye", "Düzce"
+    "İzmir"
 ];
 
 export const gameLevels = [
     { id: 'easy', age: '5+', title: { tr: 'Minik Kaşif', en: 'Little Explorer' }, desc: { tr: 'Görsel ipuçları ve eğlenceli görevler.', en: 'Visual clues and fun tasks.' }, icon: <Star size={24} className="text-yellow-400" />, color: 'border-yellow-600 bg-yellow-900/40' },
     { id: 'medium', age: '9+', title: { tr: 'Meraklı Gezgin', en: 'Curious Traveler' }, desc: { tr: 'Gizemli bulmacalar ve keşif rotaları.', en: 'Mysterious puzzles and discovery routes.' }, icon: <Compass size={24} className="text-emerald-400" />, color: 'border-emerald-600 bg-emerald-900/40' },
-    { id: 'hard', age: '13+', title: { tr: 'Usta Arkeolog', en: 'Master Archaeologist' }, desc: { tr: 'Zorlu şifreler ve derin tarih bilgisi.', en: 'Challenging codes and deep history knowledge.' }, icon: <Scroll size={24} className="text-amber-400" />, color: 'border-amber-600 bg-amber-900/40' }
+    { id: 'hard', age: '13+', title: { tr: 'Usta Araştırmacı', en: 'Master Researcher' }, desc: { tr: 'Zorlu sorular ve derin bilgi.', en: 'Challenging questions and deep knowledge.' }, icon: <Scroll size={24} className="text-amber-400" />, color: 'border-amber-600 bg-amber-900/40' }
 ];

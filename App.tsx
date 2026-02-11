@@ -68,7 +68,7 @@ function shuffleArray<T>(array: T[]): T[] {
 // --- Main Component ---
 
 export default function App() {
-  const [currentScreen, setCurrentScreen] = useState('welcome');
+  const [currentScreen, setCurrentScreen] = useState('landing');
   const [gameMode, setGameMode] = useState<GameMode | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<Difficulty | null>(null);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
@@ -310,6 +310,19 @@ export default function App() {
     setCurrentScreen('qr-scan');
   };
 
+  const startQrScanFromLanding = () => {
+    setGameMode(null);
+    setCurrentScreen('qr-scan');
+  };
+
+  const selectMuseumManually = () => {
+    // Reset selection to allow user to choose
+    setSelectedCity(null);
+    setSelectedMuseum(null);
+    setSearchTerm('');
+    setCurrentScreen('museum');
+  };
+
   const handleQrScanResult = (decodedText: string) => {
     // Find artifact by qrCode
     const allArtifacts = [...artifactDatabase, ...genericArtifacts];
@@ -323,12 +336,12 @@ export default function App() {
         return;
       }
 
-      // For welcome screen QR scan: set museum and go to level select
+      // For landing/entry QR scan: set museum and go to mode select
       if (matched.museums && matched.museums.length > 0) {
         setSelectedCity(matched.museums[1] || matched.museums[0]);
         setSelectedMuseum(matched.museums[0]);
       }
-      setCurrentScreen('level');
+      setCurrentScreen('welcome');
     } else {
       // Unrecognized QR — show alert and stay on scanner
       alert(language === 'tr' ? 'Bu QR kod tanınmadı. Lütfen bir eser QR kodunu tarayın.' : 'This QR code is not recognized. Please scan an artifact QR code.');
@@ -337,7 +350,7 @@ export default function App() {
 
   const handleLevelSubmit = () => {
     if (selectedDifficulty) {
-      if (gameMode === 'quiz' || gameMode === 'qr') {
+      if (selectedMuseum) {
         startGame(selectedDifficulty);
       } else {
         setCurrentScreen('museum');
@@ -348,9 +361,7 @@ export default function App() {
   const handleCitySelect = (city: string) => setSelectedCity(city);
   const handleMuseumSelect = (museum: string) => {
     setSelectedMuseum(museum);
-    if (selectedDifficulty) {
-      startGame(selectedDifficulty);
-    }
+    setCurrentScreen('welcome');
   };
 
   const startGame = (difficultyId: Difficulty) => {
@@ -574,7 +585,7 @@ export default function App() {
   }
 
   const restartGame = () => {
-    setCurrentScreen('welcome');
+    setCurrentScreen('landing');
     setGameMode(null); // Reset mode
     setSelectedDifficulty(null);
     setSelectedCity(null);
@@ -714,8 +725,8 @@ export default function App() {
 
         <div className="relative z-10 w-full flex-1 flex flex-col">
 
-          {/* SCREEN 1: WELCOME & MODE SELECTION */}
-          {currentScreen === 'welcome' && (
+          {/* SCREEN 0: LANDING / MUSEUM ENTRY */}
+          {currentScreen === 'landing' && (
             <div className="flex-1 flex flex-col items-center justify-between p-8 pt-20 pb-12 animate-fade-in relative">
               {/* Settings Button */}
               <button onClick={() => setCurrentScreen('settings')} className="absolute top-8 right-6 text-stone-400 hover:text-amber-500 transition-colors p-2 bg-stone-800/50 rounded-full border border-stone-700">
@@ -732,7 +743,99 @@ export default function App() {
                 </div>
                 <div className="space-y-2 relative">
                   <h1 className="text-4xl font-bold text-stone-100 tracking-tight font-serif drop-shadow-md">Robov<span className="text-amber-500">App</span></h1>
-                  <p className={`text-stone-400 font-medium tracking-wide ${getTextClass('text-lg')}`}>{t.welcomeTitle}</p>
+                  <p className={`text-stone-400 font-medium tracking-wide ${getTextClass('text-lg')}`}>{t.landingSubtitle}</p>
+                </div>
+              </div>
+
+              <div className="w-full space-y-4 mt-8">
+                {/* Select Museum Button */}
+                <button
+                  onClick={selectMuseumManually}
+                  className="w-full flex items-center justify-center gap-3 py-4 px-6 bg-gradient-to-r from-amber-700 to-amber-600 hover:from-amber-600 hover:to-amber-500 text-white font-bold rounded-2xl transition-all duration-300 shadow-lg shadow-amber-900/50 hover:-translate-y-0.5 border border-amber-500/30"
+                >
+                  <Building2 size={24} />
+                  <span className={getTextClass('text-lg')}>{t.landingSelectMuseum}</span>
+                  <ChevronRight size={20} className="ml-auto" />
+                </button>
+
+                {/* Divider */}
+                <div className="flex items-center gap-3">
+                  <div className="flex-1 h-px bg-stone-700"></div>
+                  <span className="text-stone-500 text-sm font-medium">{t.landingOrDivider}</span>
+                  <div className="flex-1 h-px bg-stone-700"></div>
+                </div>
+
+                {/* QR Code Entry Button */}
+                <button
+                  onClick={startQrScanFromLanding}
+                  className="w-full flex items-center justify-center gap-3 py-4 px-6 bg-stone-800 hover:bg-stone-700 text-stone-200 font-bold rounded-2xl transition-all duration-300 shadow-lg border-2 border-stone-600 hover:border-emerald-500 hover:-translate-y-0.5"
+                >
+                  <QrCode size={24} className="text-emerald-400" />
+                  <span className={getTextClass('text-lg')}>{t.landingScanQR}</span>
+                  <Camera size={20} className="ml-auto text-stone-500" />
+                </button>
+              </div>
+
+              {/* How to Play */}
+              <button
+                onClick={() => setShowTutorial(true)}
+                className={`mt-6 flex items-center justify-center gap-2 text-emerald-400 bg-emerald-900/20 py-2.5 px-6 rounded-full backdrop-blur-sm border border-emerald-500/30 hover:bg-emerald-900/40 transition-colors ${getTextClass('text-sm')}`}
+              >
+                <Info size={16} /> <span>{t.howToPlay}</span>
+              </button>
+
+              {/* Tutorial Modal (shared) */}
+              {showTutorial && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
+                  <div className="bg-stone-900 border-2 border-amber-500/50 rounded-[2rem] p-6 w-full max-w-sm shadow-2xl relative flex flex-col max-h-[90vh] overflow-y-auto custom-scrollbar">
+                    <button onClick={() => setShowTutorial(false)} className="absolute top-4 right-4 text-stone-400 hover:text-white"><X size={24} /></button>
+                    <div className="text-center mb-6">
+                      <h2 className={`font-bold text-amber-500 font-serif mb-1 ${getTextClass('text-2xl')}`}>{t.tutorialTitle}</h2>
+                      <div className="h-1 w-16 bg-amber-500/30 mx-auto rounded-full"></div>
+                    </div>
+                    <div className="space-y-6">
+                      <div className="flex gap-4 items-start"><div className="w-10 h-10 rounded-full bg-blue-900/40 border border-blue-500/50 flex items-center justify-center shrink-0 text-blue-400 font-bold font-serif">1</div><div><h3 className={`font-bold text-white mb-1 ${getTextClass('text-base')}`}>{t.step1Title}</h3><p className={`text-stone-400 ${getTextClass('text-sm')}`}>{t.step1Desc}</p></div></div>
+                      <div className="flex gap-4 items-start"><div className="w-10 h-10 rounded-full bg-purple-900/40 border border-purple-500/50 flex items-center justify-center shrink-0 text-purple-400 font-bold font-serif">2</div><div><h3 className={`font-bold text-white mb-1 ${getTextClass('text-base')}`}>{t.step2Title}</h3><p className={`text-stone-400 ${getTextClass('text-sm')}`}>{t.step2Desc}</p></div></div>
+                      <div className="flex gap-4 items-start"><div className="w-10 h-10 rounded-full bg-emerald-900/40 border border-emerald-500/50 flex items-center justify-center shrink-0 text-emerald-400 font-bold font-serif">3</div><div><h3 className={`font-bold text-white mb-1 ${getTextClass('text-base')}`}>{t.step3Title}</h3><p className={`text-stone-400 ${getTextClass('text-sm')}`}>{t.step3Desc}</p></div></div>
+                      <div className="flex gap-4 items-start"><div className="w-10 h-10 rounded-full bg-amber-900/40 border border-amber-500/50 flex items-center justify-center shrink-0 text-amber-400 font-bold font-serif">4</div><div><h3 className={`font-bold text-white mb-1 ${getTextClass('text-base')}`}>{t.step4Title}</h3><p className={`text-stone-400 ${getTextClass('text-sm')}`}>{t.step4Desc}</p></div></div>
+                    </div>
+                    <button onClick={() => setShowTutorial(false)} className={`mt-8 w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-xl transition-colors ${getTextClass('text-base')}`}>{t.gotIt}</button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* SCREEN 1: WELCOME & MODE SELECTION */}
+          {currentScreen === 'welcome' && (
+            <div className="flex-1 flex flex-col items-center justify-between p-8 pt-20 pb-12 animate-fade-in relative">
+              {/* Back Button */}
+              <button onClick={() => { setCurrentScreen('landing'); setSelectedMuseum(null); setSelectedCity(null); }} className="absolute top-8 left-6 text-stone-400 hover:text-amber-500 transition-colors p-2 bg-stone-800/50 rounded-full border border-stone-700">
+                <ArrowLeft size={24} />
+              </button>
+              {/* Settings Button */}
+              <button onClick={() => setCurrentScreen('settings')} className="absolute top-8 right-6 text-stone-400 hover:text-amber-500 transition-colors p-2 bg-stone-800/50 rounded-full border border-stone-700">
+                <Settings size={24} />
+              </button>
+
+              <div className="flex flex-col items-center text-center space-y-4">
+                {/* Museum Badge */}
+                {selectedMuseum && (
+                  <div className="flex items-center gap-2 bg-amber-900/30 border border-amber-600/40 rounded-full px-4 py-2 shadow-md">
+                    <Building2 size={16} className="text-amber-400" />
+                    <span className={`text-amber-300 font-medium ${getTextClass('text-sm')}`}>{selectedMuseum}</span>
+                  </div>
+                )}
+                <div className="relative">
+                  <div className="w-24 h-24 bg-gradient-to-br from-amber-500 to-orange-700 rounded-full flex items-center justify-center shadow-lg shadow-amber-900/50 animate-bounce-slow border-4 border-stone-800/50 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/20 to-transparent pointer-events-none"></div>
+                    <Bot size={48} className="text-stone-900 drop-shadow-lg" />
+                  </div>
+                  <Sparkles className="absolute -top-2 -right-2 text-yellow-200 animate-pulse drop-shadow-lg" size={24} />
+                </div>
+                <div className="space-y-1 relative">
+                  <h1 className="text-3xl font-bold text-stone-100 tracking-tight font-serif drop-shadow-md">Robov<span className="text-amber-500">App</span></h1>
+                  <p className={`text-stone-400 font-medium tracking-wide ${getTextClass('text-base')}`}>{t.welcomeTitle}</p>
                 </div>
               </div>
 
@@ -842,14 +945,14 @@ export default function App() {
             <QrScanner
               language={language}
               onScanSuccess={handleQrScanResult}
-              onClose={() => setCurrentScreen(gameMode === 'treasure' ? 'game' : 'welcome')}
+              onClose={() => setCurrentScreen(gameMode === 'treasure' ? 'game' : (gameMode ? 'welcome' : 'landing'))}
             />
           )}
 
           {/* SCREEN: SETTINGS */}
           {currentScreen === 'settings' && (
             <div className="flex-1 flex flex-col p-6 pt-12 animate-slide-up">
-              <button onClick={() => setCurrentScreen('welcome')} className="absolute top-12 left-6 text-stone-400 hover:text-amber-500 transition-colors flex items-center gap-1 z-20 font-serif">← {t.back}</button>
+              <button onClick={() => setCurrentScreen('landing')} className="absolute top-12 left-6 text-stone-400 hover:text-amber-500 transition-colors flex items-center gap-1 z-20 font-serif">← {t.back}</button>
               <div className="mt-8 mb-4 text-center space-y-2">
                 <h2 className="text-3xl font-bold text-stone-100 font-serif tracking-wide drop-shadow-md">{t.settings}</h2>
                 <p className="text-stone-400 text-sm font-medium">{t.selectLanguage}</p>
@@ -1006,7 +1109,7 @@ export default function App() {
           {/* SCREEN 3: MUSEUM SELECTION (Only for Treasure Mode) */}
           {currentScreen === 'museum' && (
             <div className="flex-1 flex flex-col p-6 pt-12 animate-slide-up relative">
-              <button onClick={() => selectedCity ? resetSelection() : setCurrentScreen('level')} className="absolute top-12 left-6 text-stone-400 hover:text-amber-500 transition-colors flex items-center gap-1 z-20 font-serif">← {t.back}</button>
+              <button onClick={() => selectedCity ? setSelectedCity(null) : setCurrentScreen('landing')} className="absolute top-12 left-6 text-stone-400 hover:text-amber-500 transition-colors flex items-center gap-1 z-20 font-serif">← {t.back}</button>
               {!selectedCity ? (
                 <>
                   <div className="mt-8 mb-4 text-center space-y-2">
@@ -1034,12 +1137,14 @@ export default function App() {
                     <p className="text-stone-400 text-sm font-medium">{t.availableMuseums}</p>
                   </div>
                   <div className="flex-1 flex flex-col gap-3 pb-4 animate-slide-up">
-                    {[`${selectedCity} ${language === 'tr' ? 'Arkeoloji Müzesi' : 'Archeology Museum'}`, `${selectedCity} ${language === 'tr' ? 'Etnografya Müzesi' : 'Ethnography Museum'}`, "..."].map((museumName, idx) => (
+                    {/* Filter museums dynamically based on city - explicit for now */}
+                    {(selectedCity === 'İzmir' ? ['Köstem Zeytinyağı Müzesi'] : []).map((museumName, idx) => (
                       <button key={idx} onClick={() => handleMuseumSelect(museumName)} className="w-full p-4 rounded-xl bg-stone-900/80 border border-stone-700 hover:border-amber-500 hover:bg-stone-800 text-left transition-all group flex items-start gap-4">
                         <div className="p-2 bg-stone-950 rounded-lg border border-stone-800 group-hover:border-amber-500/50 transition-colors"><Building2 className="text-stone-400 group-hover:text-amber-500" size={20} /></div>
                         <div><h4 className={`text-stone-200 font-bold font-serif group-hover:text-amber-400 transition-colors ${getTextClass('text-base')}`}>{museumName}</h4><span className="text-stone-500 text-xs">{t.available} • 09:00 - 17:00</span></div>
                       </button>
                     ))}
+                    {selectedCity !== 'İzmir' && <div className="text-center text-stone-500 py-8 italic">{language === 'tr' ? 'Bu şehirde henüz aktif müze yok.' : 'No active museums in this city yet.'}</div>}
                   </div>
                 </>
               )}
