@@ -1,68 +1,79 @@
 <!DOCTYPE html>
 <html lang="tr">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RobovApp - Müze Hazine Avı</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Merriweather for the Ancient/Serif look -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        theme: {
-          fontFamily: {
-            sans: ['ui-sans-serif', 'system-ui', 'sans-serif'],
-            serif: ['Merriweather', 'serif'],
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RobovApp - Müze Hazine Avı</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Merriweather for the Ancient/Serif look -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        fontFamily: {
+          sans: ['ui-sans-serif', 'system-ui', 'sans-serif'],
+          serif: ['Merriweather', 'serif'],
+        },
+        extend: {
+          animation: {
+            'bounce-slow': 'bounce-slow 3s infinite ease-in-out',
+            'fade-in': 'fade-in 0.5s ease-out forwards',
+            'slide-up': 'slide-up 0.5s ease-out forwards',
           },
-          extend: {
-            animation: {
-              'bounce-slow': 'bounce-slow 3s infinite ease-in-out',
-              'fade-in': 'fade-in 0.5s ease-out forwards',
-              'slide-up': 'slide-up 0.5s ease-out forwards',
+          keyframes: {
+            'bounce-slow': {
+              '0%, 100%': { transform: 'translateY(-5%)' },
+              '50%': { transform: 'translateY(5%)' },
             },
-            keyframes: {
-              'bounce-slow': {
-                '0%, 100%': { transform: 'translateY(-5%)' },
-                '50%': { transform: 'translateY(5%)' },
-              },
-              'fade-in': {
-                'from': { opacity: '0', transform: 'scale(0.95)' },
-                'to': { opacity: '1', transform: 'scale(1)' },
-              },
-              'slide-up': {
-                'from': { opacity: '0', transform: 'translateY(20px)' },
-                'to': { opacity: '1', transform: 'translateY(0)' },
-              }
+            'fade-in': {
+              'from': { opacity: '0', transform: 'scale(0.95)' },
+              'to': { opacity: '1', transform: 'scale(1)' },
+            },
+            'slide-up': {
+              'from': { opacity: '0', transform: 'translateY(20px)' },
+              'to': { opacity: '1', transform: 'translateY(0)' },
             }
           }
         }
       }
-    </script>
-    <style>
-      /* Custom Scrollbar Styles to match the theme */
-      .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-      .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-      .custom-scrollbar::-webkit-scrollbar-thumb { background: #44403c; border-radius: 4px; }
-    </style>
+    }
+  </script>
+  <style>
+    /* Custom Scrollbar Styles to match the theme */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #44403c;
+      border-radius: 4px;
+    }
+  </style>
   <script type="importmap">
 {
   "imports": {
     "react/": "https://esm.sh/react@^19.2.4/",
     "react": "https://esm.sh/react@^19.2.4",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
-    "@google/genai": "https://esm.sh/@google/genai@^1.40.0"
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0"
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/index.css">
 </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-  </body>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
 </html>

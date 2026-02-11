@@ -6,9 +6,8 @@ import {
   Percent, Zap, Gift, User, Save, Medal, Ghost, BookOpen, LayoutGrid, QrCode, ScanLine, Camera, LogOut,
   Volume2, VolumeX, Type, Info, Target, ArrowLeft, Lightbulb
 } from 'lucide-react';
-// TEMPORARILY DISABLED: Gemini API calls are disabled for deployment.
-// import { GoogleGenAI, Chat, Modality } from "@google/genai";
-type Chat = any; // placeholder type while API is disabled
+// Gemini API calls are proxied through Cloudflare Pages Functions.
+// No client-side SDK import needed.
 import QrScanner from './QrScanner';
 
 import {
@@ -116,7 +115,6 @@ export default function App() {
   const [chatInput, setChatInput] = useState('');
   const [isChatLoading, setIsChatLoading] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
-  const chatSessionRef = useRef<Chat | null>(null);
 
   // Audio Refs
   const audioContextRef = useRef<AudioContext | null>(null);
@@ -187,14 +185,8 @@ export default function App() {
   };
 
   // Initialize Welcome Message when language changes
-  // TEMPORARILY DISABLED: Gemini Chat Session initialization
   useEffect(() => {
-    // Set initial welcome message
     setChatMessages([{ role: 'model', text: t.chatWelcome }]);
-
-    // Gemini Chat Session is temporarily disabled for secure deployment.
-    // chatSessionRef.current = null;
-
   }, [language]);
 
   // Scroll to bottom of chat
@@ -202,8 +194,7 @@ export default function App() {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatMessages, isChatOpen]);
 
-  // --- TTS Helper Function ---
-  // TEMPORARILY DISABLED: TTS uses Gemini API which requires a secure backend.
+  // --- TTS Helper Function (via /api/tts Cloudflare Function) ---
   const generateAndPlayTTS = async (textToSpeak: string) => {
     // Stop any existing audio first
     if (sourceNodeRef.current) {
@@ -214,8 +205,46 @@ export default function App() {
 
     if (!textToSpeak) return;
 
-    // TTS is temporarily disabled.
-    console.log("TTS is temporarily disabled. Text:", textToSpeak);
+    try {
+      const response = await fetch('/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: textToSpeak }),
+      });
+
+      if (!response.ok) {
+        console.error('TTS API error:', response.status);
+        return;
+      }
+
+      const data = await response.json();
+      const base64Audio = data.audio;
+
+      if (base64Audio) {
+        if (!audioContextRef.current) {
+          audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
+        }
+
+        if (audioContextRef.current.state === 'suspended') {
+          await audioContextRef.current.resume();
+        }
+
+        const audioBuffer = await decodeAudioData(
+          decodeBase64(base64Audio),
+          audioContextRef.current,
+          24000,
+          1
+        );
+
+        const source = audioContextRef.current.createBufferSource();
+        source.buffer = audioBuffer;
+        source.connect(audioContextRef.current.destination);
+        source.start();
+        sourceNodeRef.current = source;
+      }
+    } catch (error) {
+      console.error('TTS Error:', error);
+    }
   };
 
   // TTS Effect using Gemini for Questions
@@ -600,24 +629,38 @@ export default function App() {
     setIsScoreSaved(true);
   };
 
-  // TEMPORARILY DISABLED: Chat uses Gemini API which requires a secure backend.
+  // --- Chat (via /api/chat Cloudflare Function) ---
   const handleChatSend = async () => {
     if (!chatInput.trim() || isChatLoading) return;
 
     const userMessage = chatInput.trim();
-    setChatMessages(prev => [...prev, { role: 'user', text: userMessage }]);
+    const updatedMessages: ChatMessage[] = [...chatMessages, { role: 'user', text: userMessage }];
+    setChatMessages(updatedMessages);
     setChatInput('');
     setIsChatLoading(true);
 
-    // Simulate a short delay for UX
-    await new Promise(resolve => setTimeout(resolve, 500));
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ history: updatedMessages, language }),
+      });
 
-    const comingSoonMsg = language === 'tr'
-      ? "Robo Asistan şu an bakımdadır. Yakında geri döneceğim! 🚀"
-      : "Robo Assistant is currently under maintenance. I'll be back soon! 🚀";
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
 
-    setChatMessages(prev => [...prev, { role: 'model', text: comingSoonMsg }]);
-    setIsChatLoading(false);
+      const data = await response.json();
+      setChatMessages(prev => [...prev, { role: 'model', text: data.text }]);
+    } catch (error) {
+      console.error('Chat error:', error);
+      setChatMessages(prev => [...prev, {
+        role: 'model',
+        text: language === 'tr' ? 'Bir hata oluştu, lütfen tekrar dene.' : 'An error occurred, please try again.'
+      }]);
+    } finally {
+      setIsChatLoading(false);
+    }
   };
 
   // --- Letter Collection Logic ---
