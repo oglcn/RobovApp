@@ -1,6 +1,6 @@
 import React from 'react';
 import { Star, Compass, Scroll } from 'lucide-react';
-import { Difficulty, Artifact } from './types';
+import { Difficulty, Artifact, LeaderboardEntry } from './types';
 
 // --- Constants ---
 
@@ -111,7 +111,10 @@ export const TRANSLATIONS = {
         landingScanQR: "QR Kod ile Giriş",
         landingSubtitle: "Müze keşif oyununa hoş geldin!",
         landingOrDivider: "veya",
-        selectedMuseumLabel: "Seçili Müze"
+        selectedMuseumLabel: "Seçili Müze",
+        leaderboardTitle: "Liderlik Tablosu",
+        leaderboardTreasure: "Hazine Avı",
+        leaderboardQuiz: "Bilgi Yarışması"
     },
     en: {
         welcomeTitle: "Unlock History's Mystery",
@@ -205,7 +208,10 @@ export const TRANSLATIONS = {
         landingScanQR: "Enter via QR Code",
         landingSubtitle: "Welcome to the museum exploration game!",
         landingOrDivider: "or",
-        selectedMuseumLabel: "Selected Museum"
+        selectedMuseumLabel: "Selected Museum",
+        leaderboardTitle: "Leaderboard",
+        leaderboardTreasure: "Treasure Hunt",
+        leaderboardQuiz: "Quiz Mode"
     }
 };
 
@@ -686,4 +692,29 @@ export const gameLevels = [
     { id: 'easy', age: '5+', title: { tr: 'Minik Kaşif', en: 'Little Explorer' }, desc: { tr: 'Görsel ipuçları ve eğlenceli görevler.', en: 'Visual clues and fun tasks.' }, icon: <Star size={24} className="text-yellow-400" />, color: 'border-yellow-600 bg-yellow-900/40' },
     { id: 'medium', age: '9+', title: { tr: 'Meraklı Gezgin', en: 'Curious Traveler' }, desc: { tr: 'Gizemli bulmacalar ve keşif rotaları.', en: 'Mysterious puzzles and discovery routes.' }, icon: <Compass size={24} className="text-emerald-400" />, color: 'border-emerald-600 bg-emerald-900/40' },
     { id: 'hard', age: '13+', title: { tr: 'Usta Araştırmacı', en: 'Master Researcher' }, desc: { tr: 'Zorlu sorular ve derin bilgi.', en: 'Challenging questions and deep knowledge.' }, icon: <Scroll size={24} className="text-amber-400" />, color: 'border-amber-600 bg-amber-900/40' }
+];
+
+export const MOCK_LEADERBOARD: LeaderboardEntry[] = [
+    // Treasure Hunt entries
+    { name: "Elif", score: 950, date: "15 Şub", mode: 'treasure' },
+    { name: "Burak", score: 870, date: "14 Şub", mode: 'treasure' },
+    { name: "Zeynep", score: 780, date: "13 Şub", mode: 'treasure' },
+    { name: "Arda", score: 720, date: "12 Şub", mode: 'treasure' },
+    { name: "Deniz", score: 650, date: "11 Şub", mode: 'treasure' },
+    { name: "Selin", score: 590, date: "10 Şub", mode: 'treasure' },
+    { name: "Mert", score: 480, date: "9 Şub", mode: 'treasure' },
+    { name: "Ayşe", score: 410, date: "8 Şub", mode: 'treasure' },
+    { name: "Kaan", score: 350, date: "7 Şub", mode: 'treasure' },
+    { name: "Nisa", score: 290, date: "6 Şub", mode: 'treasure' },
+    // Quiz entries
+    { name: "Emre", score: 920, date: "15 Şub", mode: 'quiz' },
+    { name: "Ceren", score: 850, date: "14 Şub", mode: 'quiz' },
+    { name: "Ali", score: 760, date: "13 Şub", mode: 'quiz' },
+    { name: "Defne", score: 700, date: "12 Şub", mode: 'quiz' },
+    { name: "Yusuf", score: 630, date: "11 Şub", mode: 'quiz' },
+    { name: "Beren", score: 560, date: "10 Şub", mode: 'quiz' },
+    { name: "Kerem", score: 490, date: "9 Şub", mode: 'quiz' },
+    { name: "Duru", score: 420, date: "8 Şub", mode: 'quiz' },
+    { name: "Efe", score: 340, date: "7 Şub", mode: 'quiz' },
+    { name: "Lina", score: 270, date: "6 Şub", mode: 'quiz' },
 ];

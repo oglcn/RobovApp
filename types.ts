@@ -63,4 +63,5 @@ export interface LeaderboardEntry {
     name: string;
     score: number;
     date: string;
+    mode: 'treasure' | 'quiz';
 }

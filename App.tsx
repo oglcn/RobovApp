@@ -18,7 +18,7 @@ import {
 import {
   TARGET_WORDS, QUESTION_COUNTS, TRANSLATIONS,
   bonusQuestionsData, artifactDatabase, genericArtifacts,
-  cities, gameLevels
+  cities, gameLevels, MOCK_LEADERBOARD
 } from './data';
 
 
@@ -84,7 +84,9 @@ export default function App() {
   const [isRestoring, setIsRestoring] = useState(true); // Persistence Loading State
 
   // Leaderboard & Result States
-  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [treasureLeaderboard, setTreasureLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [quizLeaderboard, setQuizLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [leaderboardTab, setLeaderboardTab] = useState<'treasure' | 'quiz'>('treasure');
   const [playerName, setPlayerName] = useState('');
   const [isScoreSaved, setIsScoreSaved] = useState(false);
 
@@ -155,24 +157,9 @@ export default function App() {
     return sizeMap[newIndex];
   };
 
-  // Load High Score & Settings & Leaderboard from Local Storage
+  // Load High Score & Settings from Local Storage
   useEffect(() => {
-    // Load leaderboard
-    const savedLeaderboard = localStorage.getItem('robovapp_leaderboard');
-    if (savedLeaderboard) {
-      const parsed = JSON.parse(savedLeaderboard);
-      setLeaderboard(parsed);
-      // Determine high score from top of leaderboard
-      if (parsed.length > 0) {
-        setHighScore(parsed[0].score);
-      }
-    } else {
-      // Fallback to legacy highscore if no leaderboard exists
-      const savedScore = localStorage.getItem('robovapp_highscore');
-      if (savedScore) {
-        setHighScore(parseInt(savedScore, 10));
-      }
-    }
+    // Leaderboards are now loaded in restoreState()
 
     const savedBonus = localStorage.getItem('robovapp_bonus_enabled');
     if (savedBonus !== null) {
@@ -234,6 +221,28 @@ export default function App() {
           // Restore Screen (Last, to ensure data is ready)
           if (parsed.currentScreen) setCurrentScreen(parsed.currentScreen);
         }
+
+        // Restore Leaderboards (separate localStorage keys)
+        const savedTreasure = localStorage.getItem('robovapp_leaderboard_treasure');
+        const savedQuiz = localStorage.getItem('robovapp_leaderboard_quiz');
+        const initialTreasure = savedTreasure ? JSON.parse(savedTreasure) : MOCK_LEADERBOARD.filter(e => e.mode === 'treasure');
+        const initialQuiz = savedQuiz ? JSON.parse(savedQuiz) : MOCK_LEADERBOARD.filter(e => e.mode === 'quiz');
+
+        setTreasureLeaderboard(initialTreasure);
+        setQuizLeaderboard(initialQuiz);
+
+        // Determine initial high score from the top of both leaderboards
+        const allScores = [...initialTreasure, ...initialQuiz].map(entry => entry.score);
+        if (allScores.length > 0) {
+          setHighScore(Math.max(...allScores));
+        } else {
+          // Fallback to legacy highscore if no leaderboard exists
+          const savedScore = localStorage.getItem('robovapp_highscore');
+          if (savedScore) {
+            setHighScore(parseInt(savedScore, 10));
+          }
+        }
+
       } catch (e) {
         console.error("Failed to restore state:", e);
       } finally {
@@ -738,25 +747,31 @@ export default function App() {
   const handleSaveScore = () => {
     if (!playerName.trim()) return;
 
+    const currentMode: 'treasure' | 'quiz' = gameMode === 'treasure' ? 'treasure' : 'quiz';
     const newEntry: LeaderboardEntry = {
-      name: playerName.substring(0, 12), // Limit name length
+      name: playerName.substring(0, 12),
       score: score,
-      date: new Date().toLocaleDateString(language === 'tr' ? 'tr-TR' : 'en-US', { month: 'short', day: 'numeric' })
+      date: new Date().toLocaleDateString(language === 'tr' ? 'tr-TR' : 'en-US', { month: 'short', day: 'numeric' }),
+      mode: currentMode
     };
 
-    // Add new entry, sort desc by score, keep top 10
-    const updatedList = [...leaderboard, newEntry]
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 10);
-
-    setLeaderboard(updatedList);
-    localStorage.setItem('robovapp_leaderboard', JSON.stringify(updatedList));
-
-    // Update global high score if this is the new best
-    if (updatedList.length > 0) {
-      setHighScore(updatedList[0].score);
+    if (currentMode === 'treasure') {
+      const updatedList = [...treasureLeaderboard, newEntry]
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 10);
+      setTreasureLeaderboard(updatedList);
+      localStorage.setItem('robovapp_leaderboard_treasure', JSON.stringify(updatedList));
+      if (updatedList.length > 0) setHighScore(updatedList[0].score);
+    } else {
+      const updatedList = [...quizLeaderboard, newEntry]
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 10);
+      setQuizLeaderboard(updatedList);
+      localStorage.setItem('robovapp_leaderboard_quiz', JSON.stringify(updatedList));
+      if (updatedList.length > 0) setHighScore(updatedList[0].score);
     }
 
+    setLeaderboardTab(currentMode);
     setIsScoreSaved(true);
   };
 
@@ -971,6 +986,14 @@ export default function App() {
               </div>
 
               <div className="w-full space-y-3 mt-8">
+                {/* Leaderboard Button */}
+                <button
+                  onClick={() => { setLeaderboardTab('treasure'); setCurrentScreen('leaderboard'); }}
+                  className={`w-full flex items-center justify-center gap-2 text-amber-400 bg-amber-900/20 py-2.5 px-4 rounded-full backdrop-blur-sm border border-amber-500/30 hover:bg-amber-900/40 transition-colors ${getTextClass('text-sm')}`}
+                >
+                  <Trophy size={16} /> <span>{t.leaderboardTitle}</span>
+                </button>
+
                 {/* How to Play Button */}
                 <button
                   onClick={() => setShowTutorial(true)}
@@ -1660,13 +1683,35 @@ export default function App() {
                 // --- PART 2: LEADERBOARD ---
                 <div className="flex-1 flex flex-col h-full animate-slide-up z-10 pb-12">
                   <div className="flex items-center justify-between mb-4 mt-2">
-                    <h2 className="text-2xl font-bold text-stone-100 font-serif flex items-center gap-2"><Trophy className="text-amber-400" /> {t.leaderboard}</h2>
+                    <h2 className="text-2xl font-bold text-stone-100 font-serif flex items-center gap-2"><Trophy className="text-amber-400" /> {t.leaderboardTitle}</h2>
                     <div className="px-3 py-1 bg-amber-900/30 border border-amber-800 rounded-lg text-amber-400 text-xs font-bold">
                       {score} P
                     </div>
                   </div>
 
-                  <div className="flex-1 bg-stone-900/40 rounded-2xl border border-stone-800 overflow-hidden flex flex-col min-h-[400px]">
+                  {/* Tab Switcher */}
+                  <div className="flex gap-2 mb-4">
+                    <button
+                      onClick={() => setLeaderboardTab('treasure')}
+                      className={`flex-1 py-2 rounded-xl font-bold text-sm transition-colors ${leaderboardTab === 'treasure'
+                        ? 'bg-amber-600 text-white shadow-lg'
+                        : 'bg-stone-800 text-stone-400 hover:bg-stone-700'
+                        }`}
+                    >
+                      {t.leaderboardTreasure}
+                    </button>
+                    <button
+                      onClick={() => setLeaderboardTab('quiz')}
+                      className={`flex-1 py-2 rounded-xl font-bold text-sm transition-colors ${leaderboardTab === 'quiz'
+                        ? 'bg-emerald-600 text-white shadow-lg'
+                        : 'bg-stone-800 text-stone-400 hover:bg-stone-700'
+                        }`}
+                    >
+                      {t.leaderboardQuiz}
+                    </button>
+                  </div>
+
+                  <div className="flex-1 bg-stone-900/40 rounded-2xl border border-stone-800 overflow-hidden flex flex-col min-h-[300px]">
                     {/* Table Header */}
                     <div className="grid grid-cols-12 gap-2 p-3 bg-stone-900/80 border-b border-stone-800 text-xs font-bold text-stone-500 uppercase tracking-wider">
                       <div className="col-span-2 text-center">#</div>
@@ -1676,35 +1721,33 @@ export default function App() {
 
                     {/* Table Body */}
                     <div className="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-1">
-                      {leaderboard.length === 0 ? (
-                        <div className="flex flex-col items-center justify-center h-40 text-stone-500 text-sm italic gap-2">
-                          <Ghost size={24} />
-                          {t.noRecords}
-                        </div>
-                      ) : (
-                        leaderboard.map((entry, idx) => {
-                          const isCurrentUser = entry.name === playerName && entry.score === score;
-                          let rankColor = "text-stone-400";
-                          if (idx === 0) rankColor = "text-yellow-400";
-                          if (idx === 1) rankColor = "text-slate-300";
-                          if (idx === 2) rankColor = "text-orange-400";
-
-                          return (
-                            <div key={idx} className={`grid grid-cols-12 gap-2 p-3 rounded-lg items-center text-sm transition-colors ${isCurrentUser ? 'bg-amber-900/30 border border-amber-700/50' : 'bg-stone-800/40 border border-transparent'}`}>
-                              <div className={`col-span-2 text-center font-bold ${rankColor} text-lg font-serif`}>
-                                {idx + 1}
+                      {(() => {
+                        const activeBoard = leaderboardTab === 'treasure' ? treasureLeaderboard : quizLeaderboard;
+                        return activeBoard.length === 0 ? (
+                          <div className="flex flex-col items-center justify-center h-40 text-stone-500 text-sm italic gap-2">
+                            <Ghost size={24} />
+                            {t.noRecords}
+                          </div>
+                        ) : (
+                          activeBoard.map((entry, idx) => {
+                            const isCurrentUser = entry.name === playerName && entry.score === score;
+                            let rankColor = "text-stone-400";
+                            if (idx === 0) rankColor = "text-yellow-400";
+                            if (idx === 1) rankColor = "text-slate-300";
+                            if (idx === 2) rankColor = "text-orange-400";
+                            return (
+                              <div key={idx} className={`grid grid-cols-12 gap-2 p-3 rounded-lg items-center text-sm transition-colors ${isCurrentUser ? 'bg-amber-900/30 border border-amber-700/50' : 'bg-stone-800/40 border border-transparent'}`}>
+                                <div className={`col-span-2 text-center font-bold ${rankColor} text-lg font-serif`}>{idx + 1}</div>
+                                <div className="col-span-6 text-left text-stone-200 font-medium truncate flex flex-col">
+                                  <span className={getTextClass('text-sm')}>{entry.name}</span>
+                                  <span className="text-[10px] text-stone-600 font-light">{entry.date}</span>
+                                </div>
+                                <div className={`col-span-4 text-right font-mono font-bold text-emerald-400 ${getTextClass('text-sm')}`}>{entry.score}</div>
                               </div>
-                              <div className="col-span-6 text-left text-stone-200 font-medium truncate flex flex-col">
-                                <span className={getTextClass('text-sm')}>{entry.name}</span>
-                                <span className="text-[10px] text-stone-600 font-light">{entry.date}</span>
-                              </div>
-                              <div className={`col-span-4 text-right font-mono font-bold text-emerald-400 ${getTextClass('text-sm')}`}>
-                                {entry.score}
-                              </div>
-                            </div>
-                          );
-                        })
-                      )}
+                            );
+                          })
+                        );
+                      })()}
                     </div>
                   </div>
 
@@ -1713,6 +1756,84 @@ export default function App() {
                   </button>
                 </div>
               )}
+            </div>
+          )}
+
+          {/* LEADERBOARD SCREEN (standalone from landing) */}
+          {currentScreen === 'leaderboard' && (
+            <div className="flex-1 flex flex-col p-6 animate-fade-in">
+              <div className="flex items-center gap-3 mb-6">
+                <button
+                  onClick={() => setCurrentScreen('welcome')}
+                  className="p-2 bg-stone-800 rounded-full border border-stone-700 hover:bg-stone-700 transition-colors"
+                >
+                  <ArrowLeft size={20} className="text-stone-300" />
+                </button>
+                <h2 className="text-2xl font-bold text-stone-100 font-serif flex items-center gap-2">
+                  <Trophy className="text-amber-400" /> {t.leaderboardTitle}
+                </h2>
+              </div>
+
+              {/* Tab Switcher */}
+              <div className="flex gap-2 mb-4">
+                <button
+                  onClick={() => setLeaderboardTab('treasure')}
+                  className={`flex-1 py-2.5 rounded-xl font-bold text-sm transition-colors ${leaderboardTab === 'treasure'
+                    ? 'bg-amber-600 text-white shadow-lg'
+                    : 'bg-stone-800 text-stone-400 hover:bg-stone-700'
+                    }`}
+                >
+                  {t.leaderboardTreasure}
+                </button>
+                <button
+                  onClick={() => setLeaderboardTab('quiz')}
+                  className={`flex-1 py-2.5 rounded-xl font-bold text-sm transition-colors ${leaderboardTab === 'quiz'
+                    ? 'bg-emerald-600 text-white shadow-lg'
+                    : 'bg-stone-800 text-stone-400 hover:bg-stone-700'
+                    }`}
+                >
+                  {t.leaderboardQuiz}
+                </button>
+              </div>
+
+              <div className="flex-1 bg-stone-900/40 rounded-2xl border border-stone-800 overflow-hidden flex flex-col">
+                {/* Table Header */}
+                <div className="grid grid-cols-12 gap-2 p-3 bg-stone-900/80 border-b border-stone-800 text-xs font-bold text-stone-500 uppercase tracking-wider">
+                  <div className="col-span-2 text-center">#</div>
+                  <div className="col-span-6 text-left">{t.name}</div>
+                  <div className="col-span-4 text-right">{t.score}</div>
+                </div>
+
+                {/* Table Body */}
+                <div className="flex-1 overflow-y-auto custom-scrollbar p-2 space-y-1">
+                  {(() => {
+                    const activeBoard = leaderboardTab === 'treasure' ? treasureLeaderboard : quizLeaderboard;
+                    return activeBoard.length === 0 ? (
+                      <div className="flex flex-col items-center justify-center h-40 text-stone-500 text-sm italic gap-2">
+                        <Ghost size={24} />
+                        {t.noRecords}
+                      </div>
+                    ) : (
+                      activeBoard.map((entry, idx) => {
+                        let rankColor = "text-stone-400";
+                        if (idx === 0) rankColor = "text-yellow-400";
+                        if (idx === 1) rankColor = "text-slate-300";
+                        if (idx === 2) rankColor = "text-orange-400";
+                        return (
+                          <div key={idx} className={`grid grid-cols-12 gap-2 p-3 rounded-lg items-center text-sm transition-colors bg-stone-800/40 border border-transparent`}>
+                            <div className={`col-span-2 text-center font-bold ${rankColor} text-lg font-serif`}>{idx + 1}</div>
+                            <div className="col-span-6 text-left text-stone-200 font-medium truncate flex flex-col">
+                              <span className={getTextClass('text-sm')}>{entry.name}</span>
+                              <span className="text-[10px] text-stone-600 font-light">{entry.date}</span>
+                            </div>
+                            <div className={`col-span-4 text-right font-mono font-bold text-emerald-400 ${getTextClass('text-sm')}`}>{entry.score}</div>
+                          </div>
+                        );
+                      })
+                    );
+                  })()}
+                </div>
+              </div>
             </div>
           )}
 
