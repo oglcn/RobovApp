@@ -13,9 +13,9 @@
   </p>
 </div>
 
-An interactive museum companion app designed for **museums** to enhance visitor experience through gamification, AI-powered guidance, and educational quizzes. This prototype has been piloted and tested at the **Köstem Zeytinyağı Müzesi** (Köstem Olive Oil Museum).
+An interactive museum companion app designed for **museums** to enhance visitor experience through gamification, AI-powered guidance, and educational quizzes. This prototype has been piloted and tested at the **Köstem Zeytinyağı Müzesi** (Köstem Olive Oil Museum). Designed by **FLL Team #994 Robova**.
 
-Ziyaretçi deneyimini oyunlaştırma, yapay zeka destekli rehberlik ve eğitici testlerle zenginleştirmek amacıyla **müzeler** için tasarlanmış etkileşimli bir müze arkadaşı uygulaması. Bu prototip **Köstem Zeytinyağı Müzesi**'nde pilot olarak uygulanmış ve test edilmiştir.
+Ziyaretçi deneyimini oyunlaştırma, yapay zeka destekli rehberlik ve eğitici testlerle zenginleştirmek amacıyla **müzeler** için tasarlanmış etkileşimli bir müze arkadaşı uygulaması. Bu prototip **Köstem Zeytinyağı Müzesi**'nde pilot olarak uygulanmış ve test edilmiştir. **FLL Takımı #994 Robova** tarafından tasarlanmıştır.
 
 ---
 
